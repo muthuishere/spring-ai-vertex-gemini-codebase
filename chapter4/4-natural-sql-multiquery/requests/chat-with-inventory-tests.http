@@ -1,0 +1,64 @@
+
+### Expensive Item in stock
+POST {{baseurl}}/api/products/chat-with-inventory
+content-type: application/json
+
+{
+  "question": "What is the most expensive item in stock?"
+}
+
+> {%
+    client.test("Check if the response contains Canon EOS R3", function() {
+
+        responseBody = JSON.stringify(response.body);
+
+        client.assert(responseBody.toLowerCase().includes("Canon EOS R3".toLowerCase()), "Response does not contain Canon EOS R3");
+    });
+%}
+
+### Cheapest Item in stock
+POST {{baseurl}}/api/products/chat-with-inventory
+content-type: application/json
+
+{
+  "question": "What is the cheapest item in stock?"
+}
+
+> {%
+    client.test("Check if the response contains the cheapest item", function() {
+        responseBody = JSON.stringify(response.body);
+//    Biaomi Hair Dryer
+        client.assert(responseBody.toLowerCase().includes(" Hair Dryer".toLowerCase()), "Response does not contain the   Hair Dryer");
+    });
+%}
+
+### Item with highest stock
+POST {{baseurl}}/api/products/chat-with-inventory
+content-type: application/json
+
+{
+  "question": "What item has the highest stock?"
+}
+
+> {%
+    client.test("Check if the response contains the item with highest stock", function() {
+        responseBody = JSON.stringify(response.body);
+        client.assert(responseBody.toLowerCase().includes("ActiveGear Novel".toLowerCase()), "Response does not contain the item ActiveGear Novel  with highest stock");
+    });
+%}
+
+### Item with lowest stock
+POST {{baseurl}}/api/products/chat-with-inventory
+content-type: application/json
+
+{
+  "question": "What item has the lowest stock?"
+}
+
+> {%
+    client.test("Check if the response contains the item with lowest stock", function() {
+        responseBody = JSON.stringify(response.body);
+        client.assert(responseBody.toLowerCase().includes(" Bluetooth".toLowerCase()), "Response does not contain the  Bluetooth as lowest stock");
+    });
+%}
+

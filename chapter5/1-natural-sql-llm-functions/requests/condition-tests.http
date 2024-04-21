@@ -1,0 +1,127 @@
+
+### Average rating of Apple brands
+POST {{baseurl}}/api/products/chat-with-inventory
+content-type: application/json
+
+{
+  "question": "What is the average rating for all products in the brand Apple ?"
+}
+
+> {%
+    client.test("Check if the response has 4", function() {
+
+        responseBody = JSON.stringify(response.body);
+        client.assert(responseBody.toLowerCase().includes("4".toLowerCase()), "Response does not contain 4");
+    });
+%}
+
+### Average rating of apple brands
+POST {{baseurl}}/api/products/chat-with-inventory
+content-type: application/json
+
+{
+  "question": "What is the average rating for all products in the brand apple ?"
+}
+
+> {%
+    client.test("Check if the response has 4", function() {
+
+        responseBody = JSON.stringify(response.body);
+
+
+        client.assert(responseBody.toLowerCase().includes("4".toLowerCase()), "Response does not contain 4");
+    });
+%}
+
+### Do we have Bose products in stock?
+POST {{baseurl}}/api/products/chat-with-inventory
+content-type: application/json
+
+{
+  "question": "Do we have Bose products in stock?"
+}
+
+> {%
+    client.test("Check if the response has yes", function() {
+
+        responseBody = JSON.stringify(response.body);
+
+
+        client.assert(responseBody.toLowerCase().includes("yes".toLowerCase()), "Response does not contain yes");
+    });
+%}
+
+### How many Bose SoundSport Wireless are in stock
+POST {{baseurl}}/api/products/chat-with-inventory
+content-type: application/json
+
+{
+  "question": "How many Bose SoundSport Wireless are in stock?"
+}
+
+> {%
+    client.test("Check if the response has 100", function() {
+
+        responseBody = JSON.stringify(response.body);
+
+
+        client.assert(responseBody.toLowerCase().includes("100".toLowerCase()), "Response does not contain 100");
+    });
+%}
+
+### How many brands do we have in inventory?
+POST {{baseurl}}/api/products/chat-with-inventory
+content-type: application/json
+
+{
+  "question": "How many brands do we have in inventory?"
+}
+
+> {%
+    client.test("Check if the response has 27", function() {
+
+        responseBody = JSON.stringify(response.body);
+
+
+        client.assert(responseBody.toLowerCase().includes("27".toLowerCase()), "Response does not contain 27");
+    });
+%}
+
+
+### What products do you have in the Mobile Phones category?
+POST {{baseurl}}/api/products/chat-with-inventory
+content-type: application/json
+
+{
+  "question": "What products do you have in the Mobile Phones category?"
+}
+
+> {%
+    client.test("Check if the response has Samsung", function() {
+
+        responseBody = JSON.stringify(response.body);
+
+
+        client.assert(responseBody.toLowerCase().includes("Samsung".toLowerCase()), "Response does not contain Samsung");
+    });
+%}
+
+
+
+### How is  inventory distributed across different brands in terms of percentage?
+POST {{baseurl}}/api/products/chat-with-inventory
+content-type: application/json
+
+{
+  "question": "How is  inventory distributed across different brands in terms of percentage?"
+}
+
+> {%
+    client.test("Check if the response has Padibas", function() {
+
+        responseBody = JSON.stringify(response.body);
+
+
+        client.assert(responseBody.toLowerCase().includes("Padibas".toLowerCase()), "Response does not contain Padibas");
+    });
+%}

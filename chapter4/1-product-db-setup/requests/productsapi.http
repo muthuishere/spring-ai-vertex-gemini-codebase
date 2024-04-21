@@ -1,0 +1,14 @@
+### Get Product By ID
+GET http://localhost:8080/api/products/X0000001
+
+
+> {%
+client.test("Check if the response contains '31hc29nx'", function() {
+
+    responseBody = JSON.stringify(response.body);
+
+  client.assert(responseBody.includes("X0000001"), "Response does not contain '31hc29nx'");
+});
+%}
+
+

@@ -1,0 +1,34 @@
+POST http://localhost:8080/api/chat
+content-type: application/json
+
+{
+"question": "Whats your  name?"
+}
+
+###
+
+POST https://hello-spring-ai-b3e35xbn5a-uc.a.run.app/api/chat
+content-type: application/json
+
+{
+  "question": "write a program to print fibonacci numbers in java"
+}
+
+###
+
+POST https://hello-spring-ai-b3e35xbn5a-uc.a.run.app/api/chat
+content-type: application/json
+
+{
+  "question": "can you do a recursion for the same?"
+}
+
+
+###
+
+POST https://hello-spring-ai-b3e35xbn5a-uc.a.run.app/api/chat
+content-type: application/json
+
+{
+  "question": "what is my last question"
+}

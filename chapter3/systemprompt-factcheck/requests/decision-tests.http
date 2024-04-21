@@ -1,0 +1,79 @@
+
+### Question 1 - True Stuff
+POST {{baseurl}}/api/chat
+content-type: application/json
+
+{
+  "question": "Rich Hickey Created Clojure",
+  "sessionId": "cljXXx1"
+}
+
+
+### Question 1 - True Stuff
+POST {{baseurl}}/api/chat
+content-type: application/json
+
+{
+  "question": "Rich Hickey Created Clojure, you should reply only either True or False or Not sure",
+  "sessionId": "cljXXx1"
+}
+
+
+### Question 1 - True Stuff
+POST {{baseurl}}/api/fact-check
+content-type: application/json
+
+{
+  "question": "Rich Hickey Created Clojure",
+  "sessionId": "cljXX1"
+}
+
+> {%
+client.test("Check if the response contains 'true'", function() {
+
+    responseBody = JSON.stringify(response.body);
+
+  client.assert(responseBody.toLowerCase().includes("true"), "Response does not contain 'true'");
+});
+%}
+
+
+### Question 2 - False
+
+POST  {{baseurl}}/api/fact-check
+content-type: application/json
+
+{
+  "question": "The sum of 1 + 2 = 5",
+  "sessionId": "cljXX1"
+
+}
+
+> {%
+client.test("Check if the response replies with 'False'", function() {
+
+    responseBody = JSON.stringify(response.body);
+   client.assert(responseBody.toLowerCase().includes("false"), "Response does not contain 'False'");
+});
+%}
+
+
+
+### Question 3- Not sure
+
+POST  {{baseurl}}/api/fact-check
+content-type: application/json
+
+{
+  "question": "Is Today my birthday?",
+  "sessionId": "cljXX1"
+
+}
+
+> {%
+client.test("Check if the response replies with 'Not sure'", function() {
+
+    responseBody = JSON.stringify(response.body);
+   client.assert(responseBody.toLowerCase().includes("not sure"), "Response does not contain 'Not sure'");
+});
+%}

@@ -1,0 +1,34 @@
+
+### Most and least expensive product
+POST {{baseurl}}/api/products/chat-with-inventory
+content-type: application/json
+
+{
+  "question": "What is the most expensive and least expensive item in inventory?"
+}
+
+> {%
+    client.test("Check if the response has Canon and Hair Dryer", function() {
+
+        responseBody = JSON.stringify(response.body);
+        client.assert(responseBody.toLowerCase().includes("Canon".toLowerCase()));
+        client.assert(responseBody.toLowerCase().includes("Hair Dryer".toLowerCase()));
+    });
+%}
+
+### highest and lowest rated products
+POST {{baseurl}}/api/products/chat-with-inventory
+content-type: application/json
+
+{
+  "question": "What is the highest and lowest rated product?"
+}
+
+> {%
+    client.test("Check if the response has ActiveGear and Liteware", function() {
+
+        responseBody = JSON.stringify(response.body);
+        client.assert(responseBody.toLowerCase().includes("ActiveGear".toLowerCase()));
+        client.assert(responseBody.toLowerCase().includes("Liteware".toLowerCase()));
+    });
+%}
