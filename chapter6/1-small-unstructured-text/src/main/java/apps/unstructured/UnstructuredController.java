@@ -26,24 +26,22 @@ public class UnstructuredController {
     private final VertexAiGeminiChatClient vertexAiGeminiChatClient;
 
 
-
     @PostMapping("/chat-with-product")
     public ChatBotResponse chatWithProduct(@RequestBody ChatBotRequest chatBotRequest) {
 
+
+        String assistantContext = "You are an assistant, who can provide assistance with product information mentioned below. You should answer only based on below data , You dont know any other stuff. \n";
+
+        String productData = productAiService.readFromClasspath("vaccum-cleaner-products.txt");
+
+        String chatPromptContext = assistantContext + productData;
+
+        SystemMessage systemMessage = new SystemMessage(chatPromptContext);
+
         String question = chatBotRequest.question();
-
-        String about= "You are an assistant, who can provide assistance with product information mentioned below. You should answer only based on below data , You dont know any other stuff. \n";
-
-        String vaccumCleanerProductInformation = productAiService.readFromClasspath("vaccum-cleaner-products.txt");
-
-        String systemMessageContext = about + vaccumCleanerProductInformation;
-
-
         var messages = new ArrayList<Message>();
-        messages.add(new SystemMessage(systemMessageContext));
+        messages.add(systemMessage);
         messages.add(new UserMessage(question));
-
-
 
 
         Prompt prompt = new Prompt(messages);
@@ -55,12 +53,9 @@ public class UnstructuredController {
         String answer = chatResponse.getResult().getOutput().getContent();
 
 
-
-
         return new ChatBotResponse(question, answer);
 
     }
-
 
 
 }
