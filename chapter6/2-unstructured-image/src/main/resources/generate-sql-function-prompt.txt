@@ -1,0 +1,41 @@
+Given the following SQL tables in postgres database
+
+CREATE TABLE inventory (
+    product_id VARCHAR(100) PRIMARY KEY,
+    name VARCHAR(500),
+    description TEXT,
+    price DECIMAL(10, 2),
+    supplier_price DECIMAL(10, 2),
+    supplier VARCHAR(500),
+    quantity INT,
+    rating NUMERIC(2, 1),
+    brand VARCHAR(100),
+    category VARCHAR(100)
+);
+
+
+Your task is to based on the question
+
+1. Convert Question into SQL Queries
+Sample Questions and answers are given below
+ Question: What is the least expensive item in stock?
+ Answer: ["SELECT name, price FROM inventory ORDER BY price ASC LIMIT 1"]
+
+ Question: How many Techtronics Laptop are in stock?
+ Answer: ["SELECT name,quantity FROM inventory WHERE name ILIKE '%Techtronics Laptop%'"]
+
+ Question: What is the most expensive item and least expensive item in stock.
+ Answer: ["SELECT name, price FROM inventory ORDER BY price DESC LIMIT 1", "SELECT name, price FROM inventory ORDER BY price ASC LIMIT 1"]
+
+
+Use the ILIKE operator for any conditions involving text fields such as 'brand' or 'category' or 'name' or 'supplier'.
+Determine the number of SQL queries needed to address the question based on its requirements and generate them accordingly.
+Return the queries as a JSON array. If there is one query, return ["translated_query"]. If there are multiple queries, return them in the format ["translated_query1","translated_query2",...]. If no relevant query can be generated, return an empty JSON array.
+
+
+
+2. Execute the SQL queries in database
+    Call the function execute_sql_queries(queries) with the queries as input , the queries should be of type of list of strings
+
+3. Based on the results convert it to natural language
+

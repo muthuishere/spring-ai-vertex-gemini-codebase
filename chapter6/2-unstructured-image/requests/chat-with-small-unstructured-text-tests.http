@@ -1,0 +1,63 @@
+
+### contains Upright Vacuum
+POST {{baseurl}}/api/small-unstructured-text/chat-with-product
+content-type: application/json
+
+{
+  "question": "What are the types of vaccum cleaners?"
+}
+
+> {%
+    client.test("Check if the response contains Canon EOS R3", function() {
+
+        responseBody = JSON.stringify(response.body);
+
+        client.assert(responseBody.toLowerCase().includes("Upright Vacuum".toLowerCase()));
+    });
+%}
+
+### should get cheapest item
+POST {{baseurl}}/api/small-unstructured-text/chat-with-product
+content-type: application/json
+
+{
+  "question": "What is the cheapest item in stock?"
+}
+
+> {%
+    client.test("Check if the response contains the cheapest item", function() {
+        responseBody = JSON.stringify(response.body);
+        client.assert(responseBody.toLowerCase().includes("59.99".toLowerCase()));
+    });
+%}
+
+### Item with highest stock , should not know , what it was
+POST {{baseurl}}/api/small-unstructured-text/chat-with-product
+content-type: application/json
+
+{
+  "question": "What item has the highest stock?"
+}
+
+> {%
+    client.test("Check if the response does not answer on its own", function() {
+        responseBody = JSON.stringify(response.body);
+        client.assert(responseBody.toLowerCase().includes("does not".toLowerCase()));
+    });
+%}
+
+### Item with highest warranty
+POST {{baseurl}}/api/small-unstructured-text/chat-with-product
+content-type: application/json
+
+{
+  "question": "What item has the highest warranty?"
+}
+
+> {%
+    client.test("Check if the response shows highest warranty ", function() {
+        responseBody = JSON.stringify(response.body);
+        client.assert(responseBody.toLowerCase().includes("SilentCentral".toLowerCase()));
+    });
+%}
+
