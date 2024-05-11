@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,6 +98,57 @@ public class UnstructuredController {
 
 
         return new ChatBotResponse(question, answer);
+
+    }
+
+
+    @PostMapping("/chat-with-text-and-image")
+    @SneakyThrows
+    public ChatBotResponse chatWithTextandImage(@RequestBody ChatBotRequest chatBotRequest) {
+
+
+        String question = chatBotRequest.question();
+
+        String assistantContext= "You are an assistant, who can provide assistance with  information based on the data and image provided as attachments . You should answer only based on the data and image provided , You dont know any other stuff. \n";
+        SystemMessage systemMessage = new SystemMessage(assistantContext);
+
+
+        byte[] imageData = new ClassPathResource("/coupons.png").getContentAsByteArray();
+        Media imageMedia = new Media(MimeTypeUtils.IMAGE_PNG, imageData);
+
+
+
+        String productData = productAiService.readFromClasspath("vaccum-cleaner-products.txt");
+
+        byte[] textData = productData.getBytes(Charset.defaultCharset());
+        Media textMedia = new Media(MimeTypeUtils.TEXT_PLAIN, textData);
+
+
+
+        var userMessage = new UserMessage(question,
+                List.of(imageMedia,textMedia));
+
+
+        var messages = new ArrayList<Message>();
+        messages.add(systemMessage);
+        messages.add(userMessage);
+
+
+
+
+        Prompt prompt = new Prompt(messages);
+        // call the chat client
+        ChatResponse chatResponse = vertexAiGeminiChatClient.call(prompt);
+
+        log.info("Response: {}", chatResponse);
+        // get the answer
+        String answer = chatResponse.getResult().getOutput().getContent();
+
+
+
+
+        return new ChatBotResponse(question, answer);
+
 
     }
 

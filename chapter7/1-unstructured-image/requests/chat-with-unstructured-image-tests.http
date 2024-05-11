@@ -16,7 +16,10 @@ content-type: application/json
 
         responseBody = JSON.stringify(response.body);
 
-        client.assert(responseBody.toLowerCase().includes("3".toLowerCase()));
+        const hasThree = responseBody.toLowerCase().includes("3".toLowerCase()) || responseBody.toLowerCase().includes("three".toLowerCase())
+
+
+        client.assert(hasThree);
     });
 %}
 
