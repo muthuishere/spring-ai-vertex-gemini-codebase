@@ -69,37 +69,4 @@ public class UnstructuredController {
     }
 
 
-
-    @PostMapping("/chat-with-productold")
-    public ChatBotResponse chatWithProductold(@RequestBody ChatBotRequest chatBotRequest) {
-
-
-        String assistantContext = "You are an assistant, who can provide assistance with product information mentioned in the attachment. You should answer only based on below data , You dont know any other stuff.";
-
-        String productData = productAiService.readFromClasspath("vaccum-cleaner-products.txt");
-
-        String chatPromptContext = assistantContext + productData;
-
-        SystemMessage systemMessage = new SystemMessage(chatPromptContext);
-
-        String question = chatBotRequest.question();
-        var messages = new ArrayList<Message>();
-        messages.add(systemMessage);
-        messages.add(new UserMessage(question));
-
-
-        Prompt prompt = new Prompt(messages);
-        // call the chat client
-        ChatResponse chatResponse = vertexAiGeminiChatClient.call(prompt);
-
-        log.info("Response: {}", chatResponse);
-        // get the answer
-        String answer = chatResponse.getResult().getOutput().getContent();
-
-
-        return new ChatBotResponse(question, answer);
-
-    }
-
-
 }

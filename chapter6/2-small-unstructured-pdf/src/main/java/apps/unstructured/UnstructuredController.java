@@ -2,6 +2,7 @@ package apps.unstructured;
 
 import apps.unstructured.products.ProductAiService;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.ChatResponse;
 import org.springframework.ai.chat.messages.Media;
@@ -10,6 +11,9 @@ import org.springframework.ai.chat.messages.SystemMessage;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatClient;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.MediaType;
+import org.springframework.util.MimeType;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -69,23 +73,34 @@ public class UnstructuredController {
     }
 
 
+    @PostMapping("/chat-with-pdf")
+    @SneakyThrows
+    public ChatBotResponse chatWithPdf(@RequestBody ChatBotRequest chatBotRequest) {
 
-    @PostMapping("/chat-with-productold")
-    public ChatBotResponse chatWithProductold(@RequestBody ChatBotRequest chatBotRequest) {
-
-
-        String assistantContext = "You are an assistant, who can provide assistance with product information mentioned below. You should answer only based on below data , You dont know any other stuff. \n";
-
-        String productData = productAiService.readFromClasspath("vaccum-cleaner-products.txt");
-
-        String chatPromptContext = assistantContext + productData;
-
-        SystemMessage systemMessage = new SystemMessage(chatPromptContext);
 
         String question = chatBotRequest.question();
+
+        String assistantContext= "You are an assistant, who can provide assistance with  information based on the data provided as attachment. You should answer only based on the data provided , You dont know any other stuff";
+        SystemMessage systemMessage = new SystemMessage(assistantContext);
+
+
+
+        String productData = productAiService.readFromClasspath("ar_laptop_user_manual.pdf");
+
+
+
+        byte[] imageData = new ClassPathResource("ar_laptop_user_manual.pdf").getContentAsByteArray();
+//        MediaType.APPLICATION_PDF
+//        MimeType mimeType= new MimeType("application", "pdf");
+        Media pdfMedia = new Media(MimeTypeUtils.parseMimeType("application/pdf"), imageData);
+
+
+        var userMessage = new UserMessage(question,
+                List.of(pdfMedia));
+
         var messages = new ArrayList<Message>();
         messages.add(systemMessage);
-        messages.add(new UserMessage(question));
+        messages.add(userMessage);
 
 
         Prompt prompt = new Prompt(messages);
@@ -100,6 +115,7 @@ public class UnstructuredController {
         return new ChatBotResponse(question, answer);
 
     }
+
 
 
 }
