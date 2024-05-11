@@ -4,7 +4,7 @@ POST {{baseurl}}/api/unstructured-data/chat-with-product
 content-type: application/json
 
 {
-  "question": "What are the types of vaccum cleaners?"
+  "question": "What are the types of vacuum cleaners?"
 }
 
 > {%

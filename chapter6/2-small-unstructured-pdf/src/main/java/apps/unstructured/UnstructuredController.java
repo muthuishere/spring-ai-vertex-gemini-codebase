@@ -44,7 +44,7 @@ public class UnstructuredController {
 
 
 
-        String productData = productAiService.readFromClasspath("vaccum-cleaner-products.txt");
+        String productData = productAiService.readFromClasspath("vacuum-cleaner-products.txt");
 
         byte[] textData = productData.getBytes(Charset.defaultCharset());
         Media textMedia = new Media(MimeTypeUtils.TEXT_PLAIN, textData);

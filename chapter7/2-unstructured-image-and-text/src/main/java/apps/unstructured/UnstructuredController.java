@@ -38,7 +38,7 @@ public class UnstructuredController {
 
         String assistantContext = "You are an assistant, who can provide assistance with product information mentioned below. You should answer only based on below data , You dont know any other stuff. \n";
 
-        String productData = productAiService.readFromClasspath("vaccum-cleaner-products.txt");
+        String productData = productAiService.readFromClasspath("vacuum-cleaner-products.txt");
 
         String chatPromptContext = assistantContext + productData;
 
@@ -118,7 +118,7 @@ public class UnstructuredController {
 
 
 
-        String productData = productAiService.readFromClasspath("vaccum-cleaner-products.txt");
+        String productData = productAiService.readFromClasspath("vacuum-cleaner-products.txt");
 
         byte[] textData = productData.getBytes(Charset.defaultCharset());
         Media textMedia = new Media(MimeTypeUtils.TEXT_PLAIN, textData);

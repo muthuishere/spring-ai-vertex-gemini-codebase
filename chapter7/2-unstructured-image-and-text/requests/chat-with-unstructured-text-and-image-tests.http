@@ -4,7 +4,7 @@ POST {{baseurl}}/api/unstructured-data/chat-with-text-and-image
 content-type: application/json
 
 {
-  "question": "What are the types of vaccum cleaners?"
+  "question": "What are the types of vacuum cleaners?"
 }
 
 > {%
@@ -21,7 +21,7 @@ POST {{baseurl}}/api/unstructured-data/chat-with-text-and-image
 content-type: application/json
 
 {
-  "question": "Who gives discount for vaccum cleaners?"
+  "question": "Who gives discount for vacuum cleaners?"
 }
 
 > {%
