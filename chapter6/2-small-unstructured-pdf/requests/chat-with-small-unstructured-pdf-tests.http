@@ -45,7 +45,7 @@ Content-Type: application/json
 
 
 {
-"question": "How do you install software on the AR Laptop using Ubuntu?"
+"question": "How do you install software on the Laptop using Ubuntu?"
 }
 
 
@@ -64,7 +64,7 @@ Content-Type: application/json
 
 
 {
-"question": "What should you do if the AR Laptop does not power on?"
+"question": "What should you do if the Laptop does not power on?"
 }
 
 

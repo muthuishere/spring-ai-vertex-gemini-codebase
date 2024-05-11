@@ -12,8 +12,7 @@ import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatClient;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.http.MediaType;
-import org.springframework.util.MimeType;
+
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -85,14 +84,9 @@ public class UnstructuredController {
 
 
 
-        String productData = productAiService.readFromClasspath("ar_laptop_user_manual.pdf");
 
-
-
-        byte[] imageData = new ClassPathResource("ar_laptop_user_manual.pdf").getContentAsByteArray();
-//        MediaType.APPLICATION_PDF
-//        MimeType mimeType= new MimeType("application", "pdf");
-        Media pdfMedia = new Media(MimeTypeUtils.parseMimeType("application/pdf"), imageData);
+        byte[] productManualData = new ClassPathResource("ar_laptop_user_manual.pdf").getContentAsByteArray();
+        Media pdfMedia = new Media(MimeTypeUtils.parseMimeType("application/pdf"), productManualData);
 
 
         var userMessage = new UserMessage(question,
