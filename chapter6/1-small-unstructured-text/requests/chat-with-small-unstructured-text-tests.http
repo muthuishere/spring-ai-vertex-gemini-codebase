@@ -1,6 +1,6 @@
 
 ### contains Upright Vacuum
-POST {{baseurl}}/api/small-unstructured-text/chat-with-product
+POST {{baseurl}}/api/unstructured-data/chat-with-product
 content-type: application/json
 
 {
@@ -17,7 +17,7 @@ content-type: application/json
 %}
 
 ### should get cheapest item
-POST {{baseurl}}/api/small-unstructured-text/chat-with-product
+POST {{baseurl}}/api/unstructured-data/chat-with-product
 content-type: application/json
 
 {
@@ -32,7 +32,7 @@ content-type: application/json
 %}
 
 ### Item with highest stock , should not know , what it was
-POST {{baseurl}}/api/small-unstructured-text/chat-with-product
+POST {{baseurl}}/api/unstructured-data/chat-with-product
 content-type: application/json
 
 {
@@ -47,7 +47,7 @@ content-type: application/json
 %}
 
 ### Item with highest warranty
-POST {{baseurl}}/api/small-unstructured-text/chat-with-product
+POST {{baseurl}}/api/unstructured-data/chat-with-product
 content-type: application/json
 
 {

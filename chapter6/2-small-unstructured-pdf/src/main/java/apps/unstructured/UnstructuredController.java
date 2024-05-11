@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/small-unstructured-text/")
+@RequestMapping("/api/unstructured-data/")
 @RequiredArgsConstructor
 @Slf4j
 public class UnstructuredController {

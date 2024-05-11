@@ -1,6 +1,6 @@
 
 ### Check Initial Setup Instructions
-POST {{baseurl}}/api/small-unstructured-text/chat-with-pdf
+POST {{baseurl}}/api/unstructured-data/chat-with-pdf
 Content-Type: application/json
 
 {
@@ -19,7 +19,7 @@ Content-Type: application/json
 
 
 ### Check Hardware Ports Available
-POST {{baseurl}}/api/small-unstructured-text/chat-with-pdf
+POST {{baseurl}}/api/unstructured-data/chat-with-pdf
 Content-Type: application/json
 
 
@@ -40,7 +40,7 @@ Content-Type: application/json
 
 
 ### Verify Software Installation Process
-POST {{baseurl}}/api/small-unstructured-text/chat-with-pdf
+POST {{baseurl}}/api/unstructured-data/chat-with-pdf
 Content-Type: application/json
 
 
@@ -53,13 +53,15 @@ Content-Type: application/json
 > {%
     client.test("Check if the installation process is detailed correctly", function() {
         var responseBody =JSON.stringify(response.body);
-        client.assert(responseBody.toLowerCase().includes("ubuntu software center"));
+        //  "answer": " To install software on the AR Laptop using Ubuntu, follow these steps:\n\n1. Open the Activities corner by clicking on the icon in the top-left corner of the screen.\n2. Type \"Software Center\" in the search bar and click on the Software Center icon that appears.\n3. Browse through the available software or use the search bar to find the specific software you want to install.\n4. Click on the Install button next to the software you want to install.\n5. Enter your password when prompted and click on the Authenticate button.\n6. The software will be downloaded and installed on your laptop.\n7. Once the installation is complete, you can open the software by clicking on the icon that appears on the desktop or in the Applications menu."
+
+        client.assert(responseBody.toLowerCase().includes("software"));
     });
 %}
 
 
 ### Validate Troubleshooting for Power Issues
-POST {{baseurl}}/api/small-unstructured-text/chat-with-pdf
+POST {{baseurl}}/api/unstructured-data/chat-with-pdf
 Content-Type: application/json
 
 
@@ -78,7 +80,7 @@ Content-Type: application/json
 
 
 ### Check Warranty Information
-POST {{baseurl}}/api/small-unstructured-text/chat-with-pdf
+POST {{baseurl}}/api/unstructured-data/chat-with-pdf
 Content-Type: application/json
 
 

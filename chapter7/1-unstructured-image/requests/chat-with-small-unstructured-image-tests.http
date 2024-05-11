@@ -4,7 +4,7 @@
 #- Where is the location
 
 ### What is happening
-POST {{baseurl}}/api/small-unstructured-text/chat-with-image
+POST {{baseurl}}/api/unstructured-data/chat-with-image
 content-type: application/json
 
 {
@@ -21,7 +21,7 @@ content-type: application/json
 %}
 
 ### is there any discounts car wash
-POST {{baseurl}}/api/small-unstructured-text/chat-with-image
+POST {{baseurl}}/api/unstructured-data/chat-with-image
 content-type: application/json
 
 {
@@ -36,7 +36,7 @@ content-type: application/json
 %}
 
 ### Which company provides discount for gym
-POST {{baseurl}}/api/small-unstructured-text/chat-with-image
+POST {{baseurl}}/api/unstructured-data/chat-with-image
 content-type: application/json
 
 {
@@ -51,7 +51,7 @@ content-type: application/json
 %}
 
 ### What are the colors used
-POST {{baseurl}}/api/small-unstructured-text/chat-with-image
+POST {{baseurl}}/api/unstructured-data/chat-with-image
 content-type: application/json
 
 {
@@ -66,7 +66,7 @@ content-type: application/json
 %}
 
 ### What are the Objects in Image
-POST {{baseurl}}/api/small-unstructured-text/chat-with-image
+POST {{baseurl}}/api/unstructured-data/chat-with-image
 content-type: application/json
 
 {
