@@ -142,6 +142,45 @@ public class UnstructuredController {
 
     }
 
+    @PostMapping("/chat-with-audio")
+    @SneakyThrows
+    public ChatBotResponse chatWithAudio(@RequestBody ChatBotRequest chatBotRequest) {
+
+        String question = chatBotRequest.question();
+
+        String assistantContext= "You are an assistant, who can provide assistance with  information based on audio. You should answer the question only based on audio, You dont know any other stuff. Be precise of whats been asked and answer accordingly \n";
+        SystemMessage systemMessage = new SystemMessage(assistantContext);
+
+
+        byte[] data = new ClassPathResource("/sarah-customercare.mp3").getContentAsByteArray();
+        Media media = new Media(MimeTypeUtils.parseMimeType("audio/mp3"), data);
+
+        var userMessage = new UserMessage(question,
+                List.of(media));
+
+
+        var messages = new ArrayList<Message>();
+        messages.add(systemMessage);
+        messages.add(userMessage);
+
+
+
+
+        Prompt prompt = new Prompt(messages);
+        // call the chat client
+        ChatResponse chatResponse = vertexAiGeminiChatClient.call(prompt);
+
+        log.info("Response: {}", chatResponse);
+        // get the answer
+        String answer = chatResponse.getResult().getOutput().getContent();
+
+
+
+
+        return new ChatBotResponse(question, answer);
+
+    }
+
 
 
 }
