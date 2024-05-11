@@ -74,7 +74,7 @@ public class UnstructuredController {
     public ChatBotResponse chatWithProductold(@RequestBody ChatBotRequest chatBotRequest) {
 
 
-        String assistantContext = "You are an assistant, who can provide assistance with product information mentioned in the attachment. You should answer only based on below data , You dont know any other stuff.";
+        String assistantContext = "You are an assistant, who can provide assistance with product information mentioned below. You should answer only based on below data , You dont know any other stuff. \n";
 
         String productData = productAiService.readFromClasspath("vaccum-cleaner-products.txt");
 
