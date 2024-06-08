@@ -10,7 +10,7 @@
 ```properties
 spring.ai.vertex.ai.gemini.projectId=your_project_id
 spring.ai.vertex.ai.gemini.location=us-central1
-spring.ai.vertex.ai.gemini.chat.options.model=gemini-1.0-pro-001
+spring.ai.vertex.ai.gemini.chat.options.model=gemini-1.5-flash
 spring.cloud.gcp.sql.enabled=true
 spring.cloud.gcp.sql.instance-connection-name=your_project_id:us-central1:postgres-instance
 spring.cloud.gcp.sql.database-name=postgres
@@ -27,7 +27,7 @@ Update the src/main/resources/application.properties file with the following pro
 
 spring.ai.vertex.ai.gemini.projectId=your_project_id
 spring.ai.vertex.ai.gemini.location=us-central1
-spring.ai.vertex.ai.gemini.chat.options.model=gemini-1.0-pro-001
+spring.ai.vertex.ai.gemini.chat.options.model=gemini-1.5-flash
 spring.cloud.gcp.sql.enabled=false
 spring.cloud.gcp.sql.instance-connection-name=your_project_id:us-central1:postgres-instance
 spring.cloud.gcp.sql.database-name=postgres

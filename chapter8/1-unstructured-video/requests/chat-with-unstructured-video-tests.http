@@ -49,3 +49,19 @@ content-type: application/json
     });
 %}
 
+
+### Is the voice male or female
+POST {{baseurl}}/api/unstructured-data/chat-with-video
+content-type: application/json
+
+{
+  "question": "Is the voice male or female?"
+}
+
+> {%
+    client.test("Check if the response has PG", function() {
+        responseBody = JSON.stringify(response.body);
+        client.assert(responseBody.toLowerCase().includes("PG".toLowerCase()));
+    });
+%}
+

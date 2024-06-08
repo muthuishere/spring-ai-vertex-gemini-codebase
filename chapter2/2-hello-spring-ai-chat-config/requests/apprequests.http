@@ -5,6 +5,13 @@ content-type: application/json
 "question": "Whats your  name?"
 }
 
+> {%
+    client.test("Check if the response is correct", function() {
+        responseBody = JSON.stringify(response.body);
+        client.assert(responseBody.toLowerCase().includes("large language model".toLowerCase()));
+    });
+%}
+
 ###
 
 POST {{baseurl}}/api/chat
