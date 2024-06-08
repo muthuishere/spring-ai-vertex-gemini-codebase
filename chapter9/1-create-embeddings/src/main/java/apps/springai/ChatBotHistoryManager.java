@@ -1,4 +1,4 @@
-package apps.unstructured;
+package apps.springai;
 
 
 import org.springframework.ai.chat.messages.AssistantMessage;

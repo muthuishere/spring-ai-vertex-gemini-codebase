@@ -1,4 +1,4 @@
-package apps.unstructured.products.sql;
+package apps.springai.products.sql;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;

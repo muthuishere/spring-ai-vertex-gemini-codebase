@@ -1,9 +1,9 @@
-package apps.unstructured.products;
+package apps.springai.products;
 
-import apps.unstructured.ChatBotRequest;
-import apps.unstructured.ChatBotResponse;
-import apps.unstructured.products.sql.QueryRequest;
-import apps.unstructured.products.sql.QueryResponse;
+import apps.springai.ChatBotRequest;
+import apps.springai.ChatBotResponse;
+import apps.springai.products.sql.QueryRequest;
+import apps.springai.products.sql.QueryResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.ChatResponse;

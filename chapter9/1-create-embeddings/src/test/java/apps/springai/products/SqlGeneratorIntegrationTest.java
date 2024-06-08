@@ -1,4 +1,4 @@
-package apps.unstructured.products;
+package apps.springai.products;
 
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;

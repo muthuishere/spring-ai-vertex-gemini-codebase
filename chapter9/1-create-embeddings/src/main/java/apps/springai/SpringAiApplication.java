@@ -1,18 +1,18 @@
-package apps.unstructured;
+package apps.springai;
 
-import apps.unstructured.products.sql.LLMSqlQueryExecutor;
-import apps.unstructured.products.sql.QueryRequest;
-import apps.unstructured.products.sql.QueryResponse;
+import apps.springai.products.sql.LLMSqlQueryExecutor;
+import apps.springai.products.sql.QueryRequest;
+import apps.springai.products.sql.QueryResponse;
 import org.springframework.ai.model.function.FunctionCallbackWrapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class UnstructuredDataAiApplication {
+public class SpringAiApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(UnstructuredDataAiApplication.class, args);
+        SpringApplication.run(SpringAiApplication.class, args);
     }
 
 

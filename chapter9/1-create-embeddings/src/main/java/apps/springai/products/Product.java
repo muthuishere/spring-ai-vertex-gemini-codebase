@@ -1,4 +1,4 @@
-package apps.unstructured.products;
+package apps.springai.products;
 
 
 import jakarta.persistence.Column;

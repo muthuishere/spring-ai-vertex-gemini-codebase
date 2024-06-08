@@ -1,4 +1,4 @@
-package apps.unstructured.products;
+package apps.springai.products;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

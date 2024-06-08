@@ -1,4 +1,4 @@
-package apps.unstructured.products.sql;
+package apps.springai.products.sql;
 
 import com.fasterxml.jackson.annotation.JsonClassDescription;
 import com.fasterxml.jackson.annotation.JsonProperty;

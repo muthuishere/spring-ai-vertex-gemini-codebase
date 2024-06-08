@@ -1,10 +1,10 @@
-package apps.unstructured;
+package apps.springai;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class UnstructuredDataAiApplicationTests {
+class SpringAiApplicationTests {
 
     @Test
     void contextLoads() {
