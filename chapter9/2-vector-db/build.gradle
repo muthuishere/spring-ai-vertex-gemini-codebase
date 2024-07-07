@@ -23,20 +23,25 @@ repositories {
 }
 
 ext {
-    set('springAiVersion', "0.8.1")
-    set('springCloudGcpVersion', "5.1.0")
+    set('springAiVersion', "1.0.0-M1")
+    set('springCloudGcpVersion', "5.4.3")
     set('springCloudVersion', "2023.0.1")
 }
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'com.google.cloud:spring-cloud-gcp-starter'
-    implementation 'org.springframework.ai:spring-ai-vertex-ai-gemini-spring-boot-starter'
+//    implementation 'org.springframework.ai:spring-ai-vertex-ai-gemini-spring-boot-starter'
+    implementation 'org.springframework.ai:spring-ai-pgvector-store-spring-boot-starter'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.ai:spring-ai-vertex-ai-gemini-spring-boot-starter'
+    // https://mvnrepository.com/artifact/com.google.cloud/google-cloud-vertexai
+//    implementation 'com.google.cloud:google-cloud-vertexai:1.6.0'
 
-    implementation 'org.springframework.ai:spring-ai-pgvector-store-spring-boot-starter'
+
+
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     runtimeOnly 'org.postgresql:postgresql'

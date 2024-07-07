@@ -1,0 +1,71 @@
+
+
+### Save Document to Vector Store
+POST {{baseurl}}/api/vectordb/document
+Content-Type: application/json
+
+{
+  "content": "You can build Restful API with Spring Boot"
+}
+
+
+
+### Create Multiple Documents
+
+
+POST {{baseurl}}/api/vectordb/documents
+Content-Type: application/json
+
+[
+  {
+    "content": "You can build Authorization with Spring Security"
+  },
+  {
+    "content": "You can connect database with Spring JPA"
+  },
+  {
+    "content": "You can build Restful API with Express JS"
+  },
+  {
+    "content": "You can build Restful API with Fiber"
+  },
+  {
+    "content": "You can build  Web Application with Electric"
+  },
+  {
+    "content": "You can build  Restful API with ActixWeb"
+  }
+]
+
+
+
+
+### Delete All Documents
+##
+
+DELETE {{baseurl}}/api/vectordb/documents
+
+
+
+
+
+### Search for Similar Documents
+### Search Documents
+GET {{baseurl}}/api/vectordb/documents/search?question=Can we Do Authorization in Spring
+
+### Search for Similar Documents with Subtle Context
+### Search Documents
+GET {{baseurl}}/api/vectordb/documents/search?question=How to build restful API in Java
+
+### Search for Similar Documents with Subtle Context
+### Search Documents , Now we can do this , call the llm with context and question and get a  conversational response , this is a very powerful feature, We just use the llm now to get conversation , so a tiny llm is enough like a web llm
+GET {{baseurl}}/api/vectordb/documents/search?question=How to build web application in Clojure
+
+
+
+
+### Search for Similar Documents with Subtle Context , Subtle will not work always
+### Search Documents , You cannot
+
+
+GET {{baseurl}}/api/vectordb/documents/search?question=How to build Restful API in Rust

@@ -6,14 +6,14 @@ import apps.springai.products.sql.QueryRequest;
 import apps.springai.products.sql.QueryResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.ai.chat.ChatResponse;
+import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.messages.SystemMessage;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.prompt.ChatOptions;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.model.function.FunctionCallbackWrapper;
-import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatClient;
+import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatModel;
 import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatOptions;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +29,7 @@ public class ProductController {
 
     private final ProductRepository productRepository;
     private final ProductAiService productAiService;
-    private final VertexAiGeminiChatClient vertexAiGeminiChatClient;
+    private final VertexAiGeminiChatModel vertexAiGeminiChatModel;
     private final   FunctionCallbackWrapper<QueryRequest, QueryResponse> llmSqlQueryExecutorFunction;
 
 
@@ -53,7 +53,7 @@ public class ProductController {
 
         Prompt prompt = new Prompt(messages,options);
         // call the chat client
-        ChatResponse chatResponse = vertexAiGeminiChatClient.call(prompt);
+        ChatResponse chatResponse = vertexAiGeminiChatModel.call(prompt);
 
         log.info("Response: {}", chatResponse);
         // get the answer

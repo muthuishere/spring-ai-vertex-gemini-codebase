@@ -3,14 +3,10 @@ package apps.springai;
 import apps.springai.products.sql.LLMSqlQueryExecutor;
 import apps.springai.products.sql.QueryRequest;
 import apps.springai.products.sql.QueryResponse;
-import org.springframework.ai.embedding.EmbeddingClient;
 import org.springframework.ai.model.function.FunctionCallbackWrapper;
-import org.springframework.ai.vectorstore.PgVectorStore;
-import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 @SpringBootApplication
 public class SpringAiApplication {
@@ -28,6 +24,4 @@ public class SpringAiApplication {
                 .withDescription("Execute SQL queries")
                 .build();
     }
-
-
 }

@@ -12,13 +12,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
-class TextEmbeddingClientIntegrationTest {
+class VertexTextEmbeddingModelIntegrationTest {
 
 
     @Autowired
-    TextEmbeddingClient textEmbeddingClient;
+    VertexTextEmbeddingModel textEmbeddingClient;
 
-    Logger log = LoggerFactory.getLogger(TextEmbeddingClientIntegrationTest.class);
+    Logger log = LoggerFactory.getLogger(VertexTextEmbeddingModelIntegrationTest.class);
 
     @Test
     void testEmbeddingReturnsExpectedSize() {
