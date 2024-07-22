@@ -1,0 +1,86 @@
+
+
+### Save Document to Vector Store
+POST {{baseurl}}/api/vectordb/document
+Content-Type: application/json
+
+{
+  "content": "Our e-commerce platform's backend is built with Spring Boot, utilizing Spring Security for authentication and Spring Data JPA for database operations"
+}
+
+
+
+### Create Multiple Documents
+
+
+POST {{baseurl}}/api/vectordb/documents
+Content-Type: application/json
+
+[
+  {
+    "content": "The company's board of directors is led by Jane Smith, a seasoned e-commerce executive with 20 years of industry experience"
+  },
+  {
+    "content": "Our customer-facing web application is developed using React, providing a responsive and interactive shopping experience"
+  },
+  {
+    "content": "Last quarter's revenue reached $24.7 million, marking a 15% year-over-year growth"
+  },
+  {
+    "content": "Employee attendance last month averaged 94%, with our flexible work-from-home policy contributing to high engagement"
+  },
+  {
+    "content": "We leverage machine learning for personalized product recommendations, implemented using TensorFlow and Python"
+  },
+  {
+    "content": "Our mobile app, available on both iOS and Android platforms, accounts for 40% of our total sales"
+  }
+]
+
+
+
+
+### Delete All Documents
+##
+
+DELETE {{baseurl}}/api/vectordb/documents
+
+
+
+
+
+
+### Search for Similar Documents How is your platform built on
+
+
+POST {{baseurl}}/api/vectordb/documents/search
+Content-Type: application/json
+
+{
+"question":"How is your platform built on?",
+
+}
+
+### Search for Similar Documents with Subtle Context How has your work policy affected team morale
+
+POST {{baseurl}}/api/vectordb/documents/search
+Content-Type: application/json
+
+{
+  "question": "How has your work policy affected team morale?",
+  "limit": 2
+}
+
+
+
+### Search for Similar Documents with Subtle Context are you suffering any loss
+
+POST {{baseurl}}/api/vectordb/documents/search
+Content-Type: application/json
+
+{
+  "question": "How has your work policy affected team morale?",
+  "limit": 2,
+  "maximumDistance": 0.5
+}
+

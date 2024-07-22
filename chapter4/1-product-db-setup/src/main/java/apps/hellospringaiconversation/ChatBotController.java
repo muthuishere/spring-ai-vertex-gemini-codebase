@@ -1,10 +1,10 @@
 package apps.hellospringaiconversation;
 
 
-import org.springframework.ai.chat.ChatResponse;
+import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.prompt.Prompt;
-import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatClient;
+import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,11 +15,11 @@ import java.util.ArrayList;
 public class ChatBotController {
 
 
-    private final VertexAiGeminiChatClient vertexAiGeminiChatClient;
+    private final VertexAiGeminiChatModel vertexAiGeminiChatModel;
     private final ChatBotHistoryManager chatBotHistoryManager;
 
-    public ChatBotController(VertexAiGeminiChatClient vertexAiGeminiChatClient, ChatBotHistoryManager chatBotHistoryManager) {
-        this.vertexAiGeminiChatClient = vertexAiGeminiChatClient;
+    public ChatBotController(VertexAiGeminiChatModel vertexAiGeminiChatModel, ChatBotHistoryManager chatBotHistoryManager) {
+        this.vertexAiGeminiChatModel = vertexAiGeminiChatModel;
         this.chatBotHistoryManager = chatBotHistoryManager;
     }
 
@@ -43,7 +43,7 @@ public class ChatBotController {
 
 
         // call the chat client
-        ChatResponse chatResponse = vertexAiGeminiChatClient.call(prompt);
+        ChatResponse chatResponse = vertexAiGeminiChatModel.call(prompt);
 
         // get the answer
         String answer = chatResponse.getResult().getOutput().getContent();
@@ -79,7 +79,7 @@ public class ChatBotController {
 
 
         // call the chat client
-        ChatResponse chatResponse = vertexAiGeminiChatClient.call(prompt);
+        ChatResponse chatResponse = vertexAiGeminiChatModel.call(prompt);
 
         // get the answer
         String answer = chatResponse.getResult().getOutput().getContent();

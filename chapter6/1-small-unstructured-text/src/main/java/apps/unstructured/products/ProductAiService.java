@@ -4,12 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.ai.chat.ChatResponse;
+import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.messages.SystemMessage;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.prompt.Prompt;
-import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatClient;
+import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatModel;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ProductAiService {
 
-    private final VertexAiGeminiChatClient vertexAiGeminiChatClient;
+    private final VertexAiGeminiChatModel vertexAiGeminiChatModel;
     private final JdbcTemplate jdbcTemplate;
 
 
@@ -63,7 +63,7 @@ public class ProductAiService {
 
 
         // call the chat client
-        ChatResponse chatResponse = vertexAiGeminiChatClient.call(prompt);
+        ChatResponse chatResponse = vertexAiGeminiChatModel.call(prompt);
 
         // get the answer
         String answer = chatResponse.getResult().getOutput().getContent();
@@ -88,7 +88,7 @@ public class ProductAiService {
 
 
         // call the chat client
-        ChatResponse chatResponse = vertexAiGeminiChatClient.call(prompt);
+        ChatResponse chatResponse = vertexAiGeminiChatModel.call(prompt);
 
         // get the answer
         String result = chatResponse.getResult().getOutput().getContent();

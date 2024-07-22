@@ -4,13 +4,13 @@ import apps.unstructured.products.ProductAiService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.ai.chat.ChatResponse;
+import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.messages.Media;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.messages.SystemMessage;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.prompt.Prompt;
-import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatClient;
+import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatModel;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,7 +28,7 @@ import java.util.List;
 public class UnstructuredController {
 
     private final ProductAiService productAiService;
-    private final VertexAiGeminiChatClient vertexAiGeminiChatClient;
+    private final VertexAiGeminiChatModel vertexAiGeminiChatModel;
 
 
     @PostMapping("/chat-with-product")
@@ -51,7 +51,7 @@ public class UnstructuredController {
 
         Prompt prompt = new Prompt(messages);
         // call the chat client
-        ChatResponse chatResponse = vertexAiGeminiChatClient.call(prompt);
+        ChatResponse chatResponse = vertexAiGeminiChatModel.call(prompt);
 
         log.info("Response: {}", chatResponse);
         // get the answer
@@ -89,7 +89,7 @@ public class UnstructuredController {
 
         Prompt prompt = new Prompt(messages);
         // call the chat client
-        ChatResponse chatResponse = vertexAiGeminiChatClient.call(prompt);
+        ChatResponse chatResponse = vertexAiGeminiChatModel.call(prompt);
 
         log.info("Response: {}", chatResponse);
         // get the answer
@@ -129,7 +129,7 @@ public class UnstructuredController {
 
         Prompt prompt = new Prompt(messages);
         // call the chat client
-        ChatResponse chatResponse = vertexAiGeminiChatClient.call(prompt);
+        ChatResponse chatResponse = vertexAiGeminiChatModel.call(prompt);
 
         log.info("Response: {}", chatResponse);
         // get the answer
@@ -168,7 +168,7 @@ public class UnstructuredController {
 
         Prompt prompt = new Prompt(messages);
         // call the chat client
-        ChatResponse chatResponse = vertexAiGeminiChatClient.call(prompt);
+        ChatResponse chatResponse = vertexAiGeminiChatModel.call(prompt);
 
         log.info("Response: {}", chatResponse);
         // get the answer
