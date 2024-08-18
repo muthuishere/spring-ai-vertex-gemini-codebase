@@ -57,7 +57,7 @@ POST {{baseurl}}/api/vectordb/documents/search
 Content-Type: application/json
 
 {
-"question":"How is your platform built on?",
+"question":"How is your platform built on?"
 
 }
 

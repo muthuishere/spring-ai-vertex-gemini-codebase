@@ -11,6 +11,10 @@ public record SimilaritySearchRequest(String question, Integer limit, Double max
             maximumDistance = 1.0; // Default value for threshold is set to 1.0
         }
     }
+
+    public  Double getThreshold() {
+        return 1 - maximumDistance;
+    }
 }
 
 //public record SimilaritySearchRequest(String question,Integer limit) {

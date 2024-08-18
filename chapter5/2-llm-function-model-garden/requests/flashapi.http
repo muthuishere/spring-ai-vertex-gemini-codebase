@@ -1,0 +1,279 @@
+### Using GCP AI with Normal Chat
+POST https://us-central1-aiplatform.googleapis.com/v1/projects/{{PROJECT_ID}}/locations/us-central1/publishers/google/models/{{MODEL_ID}}:streamGenerateContent
+Content-Type: application/json
+Authorization: Bearer ya29.a0AcM612zvaIZkqmMA1JntkOhXv-gHP8LFlMlC4-oxih3wVhXIKGyVVcWcZfQtkXtN1UW8tS7EzjYi2WRnf0nO7Hh-TK4cHmQL6fnlvXFi_SzEAWd6oHDEOrATe7jeAN83FglE27Va_MfDjnTyiOxBG1wl24EweE30jxRRJexkPp8aCgYKAWMSARESFQHGX2MiyulvQlFGI9IUJRVL6ofL2A0178
+
+{
+  "contents": {
+    "role": "user",
+    "parts": [
+
+      {
+        "text": "Whats your name"
+      }
+    ]
+  }
+}
+
+### Using Open AI  style GCP with Normal Chat
+//POST https://LOCATION-aiplatform.googleapis.com/v1beta1/projects/PROJECT_ID/locations/LOCATION/endpoints/openapi/chat/completions
+
+POST https://us-central1-aiplatform.googleapis.com/v1beta1/projects/{{PROJECT_ID}}/locations/us-central1/endpoints/openapi/chat/completions
+Content-Type: application/json
+Authorization: Bearer ya29.a0AcM612zvaIZkqmMA1JntkOhXv-gHP8LFlMlC4-oxih3wVhXIKGyVVcWcZfQtkXtN1UW8tS7EzjYi2WRnf0nO7Hh-TK4cHmQL6fnlvXFi_SzEAWd6oHDEOrATe7jeAN83FglE27Va_MfDjnTyiOxBG1wl24EweE30jxRRJexkPp8aCgYKAWMSARESFQHGX2MiyulvQlFGI9IUJRVL6ofL2A0178
+
+{
+  "model": "google/{{MODEL_ID}}",
+  "messages": [{
+    "role": "user",
+
+        "content": "Whats your age"
+
+  }]
+}
+
+
+### Using GCP AI with Functions
+POST https://us-central1-aiplatform.googleapis.com/v1/projects/{{PROJECT_ID}}/locations/us-central1/publishers/google/models/{{MODEL_ID}}:streamGenerateContent
+Content-Type: application/json
+Authorization: Bearer ya29.a0AcM612zvaIZkqmMA1JntkOhXv-gHP8LFlMlC4-oxih3wVhXIKGyVVcWcZfQtkXtN1UW8tS7EzjYi2WRnf0nO7Hh-TK4cHmQL6fnlvXFi_SzEAWd6oHDEOrATe7jeAN83FglE27Va_MfDjnTyiOxBG1wl24EweE30jxRRJexkPp8aCgYKAWMSARESFQHGX2MiyulvQlFGI9IUJRVL6ofL2A0178
+
+{
+  "contents": {
+    "role": "user",
+    "parts": [
+
+      {
+        "text": "Given the following SQL tables in postgres database\\n\\n        CREATE TABLE inventory (\\n        product_id VARCHAR(100) PRIMARY KEY,\\n        name VARCHAR(500),\\n        description TEXT,\\n        price DECIMAL(10, 2),\\n        supplier_price DECIMAL(10, 2),\\n        supplier VARCHAR(500),\\n        quantity INT,\\n        rating NUMERIC(2, 1),\\n        brand VARCHAR(100),\\n        category VARCHAR(100)\\n        );\\n\\n\\n        Your task is to based on the question\\n\\n        1. Convert Question into SQL Queries\\n        Sample Questions and answers are given below\\n        Question: What is the least expensive item in stock?\\n        Answer: [\\\"SELECT name, price FROM inventory ORDER BY price ASC LIMIT 1\\\"]\\n\\n        Question: How many Techtronics Laptop are in stock?\\n        Answer: [\\\"SELECT name,quantity FROM inventory WHERE name ILIKE '%Techtronics Laptop%'\\\"]\\n\\n        Question: What is the most expensive item and least expensive item in stock.\\n        Answer: [\\\"SELECT name, price FROM inventory ORDER BY price DESC LIMIT 1\\\", \\\"SELECT name, price FROM inventory ORDER BY price ASC LIMIT 1\\\"]\\n\\n\\n        Use the ILIKE operator for any conditions involving text fields such as 'brand' or 'category' or 'name' or 'supplier'.\\n        Determine the number of SQL queries needed to address the question based on its requirements and generate them accordingly.\\n        Return the queries as a JSON array. If there is one query, return [\\\"translated_query\\\"]. If there are multiple queries, return them in the format [\\\"translated_query1\\\",\\\"translated_query2\\\",...]. If no relevant query can be generated, return an empty JSON array.\\n\\n\\n\\n      2. Execute the SQL queries in database\\n      Call the function execute_sql_queries(queries) with the queries as input , the queries should be of type of list of strings\\n\\n      3. Based on the results convert it to natural language\\n\\n\\n    , Now Answer me What is the most expensive and least expensive item in inventory?"
+
+      }
+    ]
+  },
+  "tools": [
+    {
+      "function_declarations": [
+        {
+          "name": "convert_question_to_sql",
+          "description": "Converts natural language questions into SQL queries using predefined logic and the ILIKE operator for text matching.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "question": {
+                "type": "string",
+                "description": "The natural language question regarding the inventory."
+              }
+            },
+            "required": [
+              "question"
+            ]
+          }
+        },
+        {
+          "name": "execute_sql_queries",
+          "description": "Executes a list of SQL queries and returns the results.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "sqls": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "The SQL queries to be executed."
+              }
+            },
+            "required": [
+              "sqls"
+            ]
+          }
+        },
+        {
+          "name": "convert_sql_results_to_natural_language",
+          "description": "Converts SQL query results into a natural language summary.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "results": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "The results from the SQL queries."
+              }
+            },
+            "required": [
+              "results"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
+
+
+
+
+### Using GCP AI with Functions Old
+POST https://us-central1-aiplatform.googleapis.com/v1/projects/{{PROJECT_ID}}/locations/us-central1/publishers/google/models/{{FUNCTION_MODEL_ID}}:streamGenerateContent
+Content-Type: application/json
+Authorization: Bearer ya29.a0AcM612zvaIZkqmMA1JntkOhXv-gHP8LFlMlC4-oxih3wVhXIKGyVVcWcZfQtkXtN1UW8tS7EzjYi2WRnf0nO7Hh-TK4cHmQL6fnlvXFi_SzEAWd6oHDEOrATe7jeAN83FglE27Va_MfDjnTyiOxBG1wl24EweE30jxRRJexkPp8aCgYKAWMSARESFQHGX2MiyulvQlFGI9IUJRVL6ofL2A0178
+
+{
+  "contents": {
+    "role": "user",
+    "parts": [
+
+      {
+        "text": "Given the following SQL tables in postgres database\\n\\n        CREATE TABLE inventory (\\n        product_id VARCHAR(100) PRIMARY KEY,\\n        name VARCHAR(500),\\n        description TEXT,\\n        price DECIMAL(10, 2),\\n        supplier_price DECIMAL(10, 2),\\n        supplier VARCHAR(500),\\n        quantity INT,\\n        rating NUMERIC(2, 1),\\n        brand VARCHAR(100),\\n        category VARCHAR(100)\\n        );\\n\\n\\n        Your task is to based on the question\\n\\n        1. Convert Question into SQL Queries\\n        Sample Questions and answers are given below\\n        Question: What is the least expensive item in stock?\\n        Answer: [\\\"SELECT name, price FROM inventory ORDER BY price ASC LIMIT 1\\\"]\\n\\n        Question: How many Techtronics Laptop are in stock?\\n        Answer: [\\\"SELECT name,quantity FROM inventory WHERE name ILIKE '%Techtronics Laptop%'\\\"]\\n\\n        Question: What is the most expensive item and least expensive item in stock.\\n        Answer: [\\\"SELECT name, price FROM inventory ORDER BY price DESC LIMIT 1\\\", \\\"SELECT name, price FROM inventory ORDER BY price ASC LIMIT 1\\\"]\\n\\n\\n        Use the ILIKE operator for any conditions involving text fields such as 'brand' or 'category' or 'name' or 'supplier'.\\n        Determine the number of SQL queries needed to address the question based on its requirements and generate them accordingly.\\n        Return the queries as a JSON array. If there is one query, return [\\\"translated_query\\\"]. If there are multiple queries, return them in the format [\\\"translated_query1\\\",\\\"translated_query2\\\",...]. If no relevant query can be generated, return an empty JSON array.\\n\\n\\n\\n      2. Execute the SQL queries in database\\n      Call the function execute_sql_queries(queries) with the queries as input , the queries should be of type of list of strings\\n\\n      3. Based on the results convert it to natural language\\n\\n\\n    , Now Answer me What is the most expensive and least expensive item in inventory?"
+
+      }
+    ]
+  },
+  "tools": [
+    {
+      "function_declarations": [
+        {
+          "name": "convert_question_to_sql",
+          "description": "Converts natural language questions into SQL queries using predefined logic and the ILIKE operator for text matching.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "question": {
+                "type": "string",
+                "description": "The natural language question regarding the inventory."
+              }
+            },
+            "required": [
+              "question"
+            ]
+          }
+        },
+        {
+          "name": "execute_sql_queries",
+          "description": "Executes a list of SQL queries and returns the results.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "sqls": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "The SQL queries to be executed."
+              }
+            },
+            "required": [
+              "sqls"
+            ]
+          }
+        },
+        {
+          "name": "convert_sql_results_to_natural_language",
+          "description": "Converts SQL query results into a natural language summary.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "results": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "The results from the SQL queries."
+              }
+            },
+            "required": [
+              "results"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
+
+
+### Using Open AI  style GCP with Functions
+//POST https://LOCATION-aiplatform.googleapis.com/v1beta1/projects/PROJECT_ID/locations/LOCATION/endpoints/openapi/chat/completions
+
+POST https://us-central1-aiplatform.googleapis.com/v1beta1/projects/{{PROJECT_ID}}/locations/us-central1/endpoints/openapi/chat/completions
+Content-Type: application/json
+Authorization: Bearer ya29.a0AcM612zvaIZkqmMA1JntkOhXv-gHP8LFlMlC4-oxih3wVhXIKGyVVcWcZfQtkXtN1UW8tS7EzjYi2WRnf0nO7Hh-TK4cHmQL6fnlvXFi_SzEAWd6oHDEOrATe7jeAN83FglE27Va_MfDjnTyiOxBG1wl24EweE30jxRRJexkPp8aCgYKAWMSARESFQHGX2MiyulvQlFGI9IUJRVL6ofL2A0178
+
+{
+  "model": "google/{{MODEL_ID}}",
+  "messages": [{
+    "role": "user",
+
+     "content": "Given the following SQL tables in postgres database\\n\\n        CREATE TABLE inventory (\\n        product_id VARCHAR(100) PRIMARY KEY,\\n        name VARCHAR(500),\\n        description TEXT,\\n        price DECIMAL(10, 2),\\n        supplier_price DECIMAL(10, 2),\\n        supplier VARCHAR(500),\\n        quantity INT,\\n        rating NUMERIC(2, 1),\\n        brand VARCHAR(100),\\n        category VARCHAR(100)\\n        );\\n\\n\\n        Your task is to based on the question\\n\\n        1. Convert Question into SQL Queries\\n        Sample Questions and answers are given below\\n        Question: What is the least expensive item in stock?\\n        Answer: [\\\"SELECT name, price FROM inventory ORDER BY price ASC LIMIT 1\\\"]\\n\\n        Question: How many Techtronics Laptop are in stock?\\n        Answer: [\\\"SELECT name,quantity FROM inventory WHERE name ILIKE '%Techtronics Laptop%'\\\"]\\n\\n        Question: What is the most expensive item and least expensive item in stock.\\n        Answer: [\\\"SELECT name, price FROM inventory ORDER BY price DESC LIMIT 1\\\", \\\"SELECT name, price FROM inventory ORDER BY price ASC LIMIT 1\\\"]\\n\\n\\n        Use the ILIKE operator for any conditions involving text fields such as 'brand' or 'category' or 'name' or 'supplier'.\\n        Determine the number of SQL queries needed to address the question based on its requirements and generate them accordingly.\\n        Return the queries as a JSON array. If there is one query, return [\\\"translated_query\\\"]. If there are multiple queries, return them in the format [\\\"translated_query1\\\",\\\"translated_query2\\\",...]. If no relevant query can be generated, return an empty JSON array.\\n\\n\\n\\n      2. Execute the SQL queries in database\\n      Call the function execute_sql_queries(queries) with the queries as input , the queries should be of type of list of strings\\n\\n      3. Based on the results convert it to natural language\\n\\n\\n    , Now Answer me What is the most expensive and least expensive item in inventory?"
+
+  }],
+   "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "convert_question_to_sql",
+        "description": "Converts natural language questions about inventory into SQL queries.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "question": {
+              "type": "string",
+              "description": "The natural language question to convert into SQL."
+            }
+          },
+          "required": [
+            "question"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "execute_sql_queries",
+        "description": "Executes a list of SQL queries and returns the results.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "sqls": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "List of SQL queries to be executed."
+            }
+          },
+          "required": [
+            "sqls"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "convert_sql_results_to_natural_language",
+        "description": "Converts the results of SQL queries into a natural language summary.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "results": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Results from the executed SQL queries to convert into natural language."
+            }
+          },
+          "required": [
+            "results"
+          ],
+          "additionalProperties": false
+        }
+      }
+    }
+  ]
+}

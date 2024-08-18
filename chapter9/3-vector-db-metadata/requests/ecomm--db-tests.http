@@ -1,39 +1,42 @@
 
 
-### Save Document to Vector Store
-POST {{baseurl}}/api/vectordb/document
-Content-Type: application/json
-
-{
-  "content": "Our e-commerce platform's backend is built with Spring Boot, utilizing Spring Security for authentication and Spring Data JPA for database operations"
-}
-
 
 
 ### Create Multiple Documents
-
 
 POST {{baseurl}}/api/vectordb/documents
 Content-Type: application/json
 
 [
   {
-    "content": "The company's board of directors is led by Jane Smith, a seasoned e-commerce executive with 20 years of industry experience"
+    "content": "Our e-commerce platform's backend is built with Spring Boot, utilizing Spring Security for authentication and Spring Data JPA for database operations",
+    "department": "IT"
+  },
+
+
+  {
+    "content": "The company's board of directors is led by Jane Smith, a seasoned e-commerce executive with 20 years of industry experience",
+    "department": "Executive Management"
   },
   {
-    "content": "Our customer-facing web application is developed using React, providing a responsive and interactive shopping experience"
+    "content": "Our customer-facing web application is developed using React, providing a responsive and interactive shopping experience",
+    "department": "IT"
   },
   {
-    "content": "Last quarter's revenue reached $24.7 million, marking a 15% year-over-year growth"
+    "content": "Last quarter's revenue reached $24.7 million, marking a 15% year-over-year growth",
+    "department": "Executive Management"
   },
   {
-    "content": "Employee attendance last month averaged 94%, with our flexible work-from-home policy contributing to high engagement"
+    "content": "Employee attendance last month averaged 94%, with our flexible work-from-home policy contributing to high engagement",
+    "department": "HR"
   },
   {
-    "content": "We leverage machine learning for personalized product recommendations, implemented using TensorFlow and Python"
+    "content": "We leverage machine learning for personalized product recommendations, implemented using TensorFlow and Python",
+    "department": "IT"
   },
   {
-    "content": "Our mobile app, available on both iOS and Android platforms, accounts for 40% of our total sales"
+    "content": "Our mobile app, available on both iOS and Android platforms, accounts for 40% of our total sales",
+    "department": "IT"
   }
 ]
 
@@ -58,7 +61,7 @@ Content-Type: application/json
 
 {
 "question":"How is your platform built on?",
-
+ "department": "IT"
 }
 
 ### Search for Similar Documents with Subtle Context How has your work policy affected team morale

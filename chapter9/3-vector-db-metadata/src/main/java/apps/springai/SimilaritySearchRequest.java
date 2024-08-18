@@ -1,7 +1,7 @@
 package apps.springai;
 
 
-public record SimilaritySearchRequest(String question, Integer limit, Double maximumDistance) {
+public record SimilaritySearchRequest(String question, Integer limit, Double maximumDistance,String department) {
 
     public SimilaritySearchRequest {
         if (limit == null) {
@@ -10,6 +10,9 @@ public record SimilaritySearchRequest(String question, Integer limit, Double max
         if (maximumDistance == null) {
             maximumDistance = 1.0; // Default value for threshold is set to 1.0
         }
+    }
+    public  Double getThreshold() {
+        return 1 - maximumDistance;
     }
 }
 

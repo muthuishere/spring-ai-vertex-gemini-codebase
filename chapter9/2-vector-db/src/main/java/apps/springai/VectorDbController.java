@@ -58,12 +58,11 @@ public class VectorDbController {
     public List<Document> handleSimilarSearchQuery(@RequestBody SimilaritySearchRequest similaritySearchRequest) {
 
 
-        Double threshold = 1- similaritySearchRequest.maximumDistance();
 
         SearchRequest searchRequest = SearchRequest
                                         .query(similaritySearchRequest.question())
                                         .withTopK(similaritySearchRequest.limit())
-                                        .withSimilarityThreshold(threshold);
+                                        .withSimilarityThreshold(similaritySearchRequest.getThreshold());
         List<Document> documents = vectorStore.similaritySearch(searchRequest);
         return formatResults(documents);
     }
