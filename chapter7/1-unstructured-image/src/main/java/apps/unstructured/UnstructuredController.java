@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.model.ChatResponse;
-import org.springframework.ai.chat.messages.Media;
+import org.springframework.ai.model.Media;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.messages.SystemMessage;
 import org.springframework.ai.chat.messages.UserMessage;
@@ -31,36 +31,6 @@ public class UnstructuredController {
     private final VertexAiGeminiChatModel vertexAiGeminiChatModel;
 
 
-    @PostMapping("/chat-with-product")
-    public ChatBotResponse chatWithProduct(@RequestBody ChatBotRequest chatBotRequest) {
-
-
-        String assistantContext = "You are an assistant, who can provide assistance with product information mentioned below. You should answer only based on below data , You dont know any other stuff. \n";
-
-        String productData = productAiService.readFromClasspath("vacuum-cleaner-products.txt");
-
-        String chatPromptContext = assistantContext + productData;
-
-        SystemMessage systemMessage = new SystemMessage(chatPromptContext);
-
-        String question = chatBotRequest.question();
-        var messages = new ArrayList<Message>();
-        messages.add(systemMessage);
-        messages.add(new UserMessage(question));
-
-
-        Prompt prompt = new Prompt(messages);
-        // call the chat client
-        ChatResponse chatResponse = vertexAiGeminiChatModel.call(prompt);
-
-        log.info("Response: {}", chatResponse);
-        // get the answer
-        String answer = chatResponse.getResult().getOutput().getContent();
-
-
-        return new ChatBotResponse(question, answer);
-
-    }
     @PostMapping("/chat-with-image")
     @SneakyThrows
     public ChatBotResponse chatWithProductImage(@RequestBody ChatBotRequest chatBotRequest) {
@@ -71,7 +41,7 @@ public class UnstructuredController {
         SystemMessage systemMessage = new SystemMessage(assistantContext);
 
 
-        byte[] data = new ClassPathResource("/coupons.png").getContentAsByteArray();
+        ClassPathResource data = new ClassPathResource("/coupons.png");
         Media media = new Media(MimeTypeUtils.IMAGE_PNG, data);
 
         var userMessage = new UserMessage(question,

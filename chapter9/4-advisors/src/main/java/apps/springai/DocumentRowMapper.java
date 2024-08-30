@@ -41,7 +41,7 @@ public  class DocumentRowMapper implements RowMapper<Document> {
         return document;
     }
 
-    private List<Double> toDoubleList(PGobject embedding) throws SQLException {
+    private float[] toDoubleList(PGobject embedding) throws SQLException {
         float[] floatArray = (new PGvector(embedding.getValue())).toArray();
         return IntStream.range(0, floatArray.length).mapToDouble((i) -> {
             return (double)floatArray[i];

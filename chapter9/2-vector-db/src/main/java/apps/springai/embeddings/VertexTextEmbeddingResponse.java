@@ -25,7 +25,7 @@ public class VertexTextEmbeddingResponse {
         for (int i = 0; i < predictions.size(); i++) {
             Prediction prediction = predictions.get(i);
 
-            List<Double> values = prediction.getEmbeddings().getValues();
+            float[] values = prediction.getEmbeddings().getValues();
             log.info(prediction.getEmbeddings().getStatistics().toString());
             results.add(new Embedding(values, i));
         }
@@ -46,7 +46,7 @@ public class VertexTextEmbeddingResponse {
     @Data
     public static class Embeddings {
 
-        private List<Double> values;
+        private float[] values;
         private Statistics statistics;
     }
 

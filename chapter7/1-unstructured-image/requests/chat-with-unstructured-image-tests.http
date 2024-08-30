@@ -47,9 +47,9 @@ content-type: application/json
 }
 
 > {%
-    client.test("Check if the response has 50", function() {
+    client.test("Check if the response has BR FITNESS", function() {
         responseBody = JSON.stringify(response.body);
-        client.assert(responseBody.toLowerCase().includes("50".toLowerCase()));
+        client.assert(responseBody.toLowerCase().includes("BR FITNESS".toLowerCase()));
     });
 %}
 

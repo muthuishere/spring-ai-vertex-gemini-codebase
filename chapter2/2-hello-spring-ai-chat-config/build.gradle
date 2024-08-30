@@ -23,7 +23,7 @@ repositories {
 }
 
 ext {
-    set('springAiVersion', "1.0.0-M1")
+    set('springAiVersion', "1.0.0-M2")
     set('springCloudGcpVersion', "5.4.3")
     set('springCloudVersion', "2023.0.0")
 }

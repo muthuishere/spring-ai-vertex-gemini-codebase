@@ -4,12 +4,13 @@ import apps.unstructured.products.ProductAiService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.model.ChatResponse;
-import org.springframework.ai.chat.messages.Media;
+import org.springframework.ai.model.Media;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.messages.SystemMessage;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatModel;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,10 +41,8 @@ public class UnstructuredController {
         SystemMessage systemMessage = new SystemMessage(assistantContext);
 
 
+        ClassPathResource textData = new ClassPathResource("vacuum-cleaner-products.txt");
 
-        String productData = productAiService.readFromClasspath("vacuum-cleaner-products.txt");
-
-        byte[] textData = productData.getBytes(Charset.defaultCharset());
         Media textMedia = new Media(MimeTypeUtils.TEXT_PLAIN, textData);
 
 

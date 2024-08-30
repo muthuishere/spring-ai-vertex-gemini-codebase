@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.model.ChatResponse;
-import org.springframework.ai.chat.messages.Media;
+import org.springframework.ai.model.Media;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.messages.SystemMessage;
 import org.springframework.ai.chat.messages.UserMessage;
@@ -33,45 +33,6 @@ public class UnstructuredController {
     private final VertexAiGeminiChatModel vertexAiGeminiChatModel;
 
 
-    @PostMapping("/chat-with-product")
-    public ChatBotResponse chatWithProduct(@RequestBody ChatBotRequest chatBotRequest) {
-
-
-        String question = chatBotRequest.question();
-
-        String assistantContext= "You are an assistant, who can provide assistance with  information based on the data provided as attachments . You should answer only based on the data provided , You dont know any other stuff. \n";
-        SystemMessage systemMessage = new SystemMessage(assistantContext);
-
-
-
-        String productData = productAiService.readFromClasspath("vacuum-cleaner-products.txt");
-
-        byte[] textData = productData.getBytes(Charset.defaultCharset());
-        Media textMedia = new Media(MimeTypeUtils.TEXT_PLAIN, textData);
-
-
-        var userMessage = new UserMessage(question,
-                List.of(textMedia));
-
-        var messages = new ArrayList<Message>();
-        messages.add(systemMessage);
-        messages.add(userMessage);
-
-
-        Prompt prompt = new Prompt(messages);
-        // call the chat client
-        ChatResponse chatResponse = vertexAiGeminiChatModel.call(prompt);
-
-        log.info("Response: {}", chatResponse);
-        // get the answer
-        String answer = chatResponse.getResult().getOutput().getContent();
-
-
-        return new ChatBotResponse(question, answer);
-
-    }
-
-
     @PostMapping("/chat-with-pdf")
     @SneakyThrows
     public ChatBotResponse chatWithPdf(@RequestBody ChatBotRequest chatBotRequest) {
@@ -85,7 +46,7 @@ public class UnstructuredController {
 
 
 
-        byte[] productManualData = new ClassPathResource("ar_laptop_user_manual.pdf").getContentAsByteArray();
+        ClassPathResource productManualData = new ClassPathResource("ar_laptop_user_manual.pdf");   
         Media pdfMedia = new Media(MimeTypeUtils.parseMimeType("application/pdf"), productManualData);
 
 

@@ -25,7 +25,7 @@ class VertexTextEmbeddingModelIntegrationTest {
 
 
         String question = "What is the average rating for all products in the brand apple?";
-        List<Double> embeddings = textEmbeddingClient.embed(question);
+        float[] embeddings = textEmbeddingClient.embed(question);
         assertNotNull(embeddings);
 
         assertEquals(768, embeddings.size());

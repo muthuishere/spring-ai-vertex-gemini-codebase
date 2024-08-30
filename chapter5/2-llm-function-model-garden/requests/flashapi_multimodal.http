@@ -1,0 +1,27 @@
+### Using GCP AI with Normal Chat
+POST https://{{REGION}}-aiplatform.googleapis.com/v1/projects/{{PROJECT_ID}}/locations/us-central1/publishers/google/models/{{MODEL_ID}}:generateContent
+Content-Type: application/json
+Authorization: Bearer {{API_KEY}}
+
+{
+  "contents": {
+    "role": "user",
+    "parts": [
+      {
+        "inlineData": {
+          "mimeType": "image/png",
+          "data": "{{BASE64_ENCODED_IMAGE_DATA}}"
+        }
+      },
+      {
+        "inlineData": {
+          "mimeType": "text/plain",
+          "data": "{{BASE64_ENCODED_TEXT_DATA}}"
+        }
+      },
+      {
+        "text": "What are the type of vacuum cleaners available?"
+      }
+    ]
+  }
+}

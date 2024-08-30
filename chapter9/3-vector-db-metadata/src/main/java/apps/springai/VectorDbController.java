@@ -32,7 +32,11 @@ public class VectorDbController {
         //return documents;
 
         return documents.stream().map(document -> {
-            document.setEmbedding(document.getEmbedding().subList(0, 1));
+
+            float[] trimmed  = new float[2];
+            trimmed[0] = document.getEmbedding()[0];
+            trimmed[1] = document.getEmbedding()[1];
+            document.setEmbedding(trimmed);
             return document;
         }).collect(Collectors.toList());
     }
