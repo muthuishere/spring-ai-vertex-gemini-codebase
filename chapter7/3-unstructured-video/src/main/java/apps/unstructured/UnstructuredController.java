@@ -27,80 +27,7 @@ import java.util.List;
 @Slf4j
 public class UnstructuredController {
 
-    private final ProductAiService productAiService;
     private final VertexAiGeminiChatModel vertexAiGeminiChatModel;
-
-
-    @PostMapping("/chat-with-product")
-    public ChatBotResponse chatWithProduct(@RequestBody ChatBotRequest chatBotRequest) {
-
-
-        String assistantContext = "You are an assistant, who can provide assistance with product information mentioned below. You should answer only based on below data , You dont know any other stuff. \n";
-
-        String productData = productAiService.readFromClasspath("vacuum-cleaner-products.txt");
-
-        String chatPromptContext = assistantContext + productData;
-
-        SystemMessage systemMessage = new SystemMessage(chatPromptContext);
-
-        String question = chatBotRequest.question();
-        var messages = new ArrayList<Message>();
-        messages.add(systemMessage);
-        messages.add(new UserMessage(question));
-
-
-        Prompt prompt = new Prompt(messages);
-        // call the chat client
-        ChatResponse chatResponse = vertexAiGeminiChatModel.call(prompt);
-
-        log.info("Response: {}", chatResponse);
-        // get the answer
-        String answer = chatResponse.getResult().getOutput().getContent();
-
-
-        return new ChatBotResponse(question, answer);
-
-    }
-
-
-    @PostMapping("/chat-with-image")
-    @SneakyThrows
-    public ChatBotResponse chatWithProductImage(@RequestBody ChatBotRequest chatBotRequest) {
-
-        String question = chatBotRequest.question();
-
-        String assistantContext= "You are an assistant, who can provide assistance with  information based on image . You should answer only based on image , You dont know any other stuff. \n";
-        SystemMessage systemMessage = new SystemMessage(assistantContext);
-
-
-        byte[] data = new ClassPathResource("/coupons.png").getContentAsByteArray();
-        Media media = new Media(MimeTypeUtils.IMAGE_PNG, data);
-
-        var userMessage = new UserMessage(question,
-                List.of(media));
-
-
-        var messages = new ArrayList<Message>();
-        messages.add(systemMessage);
-        messages.add(userMessage);
-
-
-
-
-        Prompt prompt = new Prompt(messages);
-        // call the chat client
-        ChatResponse chatResponse = vertexAiGeminiChatModel.call(prompt);
-
-        log.info("Response: {}", chatResponse);
-        // get the answer
-        String answer = chatResponse.getResult().getOutput().getContent();
-
-
-
-
-        return new ChatBotResponse(question, answer);
-
-    }
 
 
     @PostMapping("/chat-with-video")
@@ -113,7 +40,7 @@ public class UnstructuredController {
         SystemMessage systemMessage = new SystemMessage(assistantContext);
 
 
-        byte[] data = new ClassPathResource("/vaccum-ad.mp4").getContentAsByteArray();
+        ClassPathResource data = new ClassPathResource("/vaccum-ad.mp4");
         Media media = new Media(MimeTypeUtils.parseMimeType("video/mp4"), data);
 
         var userMessage = new UserMessage(question,
