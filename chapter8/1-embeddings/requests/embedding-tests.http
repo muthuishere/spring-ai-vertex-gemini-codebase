@@ -1,0 +1,20 @@
+
+### What is happening
+POST {{baseurl}}/api/embeddings
+content-type: application/json
+
+{
+  "message": "Content of the document to embed"
+}
+
+> {%
+    client.test("Check if the response contains Valid Data", function() {
+
+        responseBody = JSON.stringify(response.body);
+
+        const hasData = responseBody.toLowerCase().includes("text-embedding-004".toLowerCase())
+
+
+        client.assert(hasData);
+    });
+%}
