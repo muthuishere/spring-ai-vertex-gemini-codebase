@@ -27,24 +27,18 @@ POST {{baseurl}}/api/vectordb/documents
 Content-Type: application/json
 
 [
-  {
-    "content": "You can build Authorization with Spring Security"
-  },
-  {
-    "content": "You can connect database with Spring JPA"
-  },
-  {
-    "content": "You can build Restful API with Express JS"
-  },
-  {
-    "content": "You can build Restful API with Fiber"
-  },
-  {
-    "content": "You can build  Web Application with Electric"
-  },
-  {
-    "content": "You can build  Restful API with ActixWeb"
-  }
+  {    "content": "The company's board of directors is led by Jane Smith, a seasoned e-commerce executive with 20 years of industry experience"  },
+
+  {    "content": "Our customer-facing web application is developed using React, providing a responsive and interactive shopping experience"  },
+
+  {    "content": "Last quarter's revenue reached $24.7 million, marking a 15% year-over-year growth"  },
+
+  {    "content": "Employee attendance last month averaged 94%, with our flexible work-from-home policy contributing to high engagement"  },
+
+  {    "content": "We leverage machine learning for personalized product recommendations, implemented using TensorFlow and Python"  },
+
+  {    "content": "Our mobile app, available on both iOS and Android platforms, accounts for 40% of our total sales"  }
+
 ]
 
 
@@ -55,4 +49,26 @@ Content-Type: application/json
 
 {
   "question":"How is your platform built on?"
+}
+
+
+### Search Documents with limit
+
+POST {{baseurl}}/api/vectordb/documents/search
+Content-Type: application/json
+
+{
+  "question":"How is your platform built on?",
+  "limit": 2
+}
+
+### Search Documents with limit and distance
+
+POST {{baseurl}}/api/vectordb/documents/search
+Content-Type: application/json
+
+{
+  "question": "How is your platform built on?",
+  "limit": 2,
+  "maximumDistance": 0.538
 }
