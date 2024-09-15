@@ -1,0 +1,48 @@
+
+### What is happening
+POST {{baseurl}}/api/vectordb/document
+content-type: application/json
+
+{
+  "content": "Our e-commerce platform's backend is built with Spring Boot, utilizing Spring Security for authentication and Spring Data JPA for database operations "
+}
+
+> {%
+    client.test("Check if the response contains Valid Data", function() {
+
+        responseBody = JSON.stringify(response.body);
+
+        const hasData = responseBody.toLowerCase().includes("Our e-commerce".toLowerCase())
+
+
+        client.assert(hasData);
+    });
+%}
+
+
+### Create Multiple Documents
+
+
+POST {{baseurl}}/api/vectordb/documents
+Content-Type: application/json
+
+[
+  {
+    "content": "You can build Authorization with Spring Security"
+  },
+  {
+    "content": "You can connect database with Spring JPA"
+  },
+  {
+    "content": "You can build Restful API with Express JS"
+  },
+  {
+    "content": "You can build Restful API with Fiber"
+  },
+  {
+    "content": "You can build  Web Application with Electric"
+  },
+  {
+    "content": "You can build  Restful API with ActixWeb"
+  }
+]

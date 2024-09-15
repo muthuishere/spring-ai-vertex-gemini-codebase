@@ -1,0 +1,14 @@
+
+### Create Embeddings directly
+
+POST https://{{location}}-aiplatform.googleapis.com/v1/projects/{{projectId}}/locations/{{location}}/publishers/google/models/{{embeddingModel}}:predict
+Authorization: Bearer {{GCLOUD_ACCESS_TOKEN}}
+
+{
+    "instances": [
+        {
+        "content": "Content of the document to embed",
+        }
+    ]
+}
+
