@@ -20,21 +20,28 @@ public record SimilaritySearchRequest(String question, Integer limit, Double max
         return 1 - maximumDistance;
     }
 
+
+
     public SearchRequest getSearchRequest() {
-        Filter.Expression expression =
-                new FilterExpressionBuilder()
-                        .eq("department", department)
-                        .build();
+
 
         SearchRequest searchRequest = SearchRequest
                 .query(question)
                 .withTopK(limit)
-                .withSimilarityThreshold(getThreshold())
-                .withFilterExpression(expression);
+                .withSimilarityThreshold(getThreshold());
+
+
+        if(department != null) {
+            Filter.Expression expression =
+                    new FilterExpressionBuilder()
+                            .eq("department", department)
+                            .build();
+            searchRequest = searchRequest.withFilterExpression(expression);
+        }
+
 
         return searchRequest;
 
     }
-
 
 }
