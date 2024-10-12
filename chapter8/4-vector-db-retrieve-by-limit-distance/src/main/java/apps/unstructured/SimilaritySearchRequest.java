@@ -1,5 +1,5 @@
 package apps.unstructured;
-
+import io.swagger.v3.oas.annotations.media.Schema;
 
 public record SimilaritySearchRequest(String question, Integer limit, Double maximumDistance) {
 
@@ -12,6 +12,7 @@ public record SimilaritySearchRequest(String question, Integer limit, Double max
         }
     }
 
+    @Schema(hidden = true)
     public  Double getThreshold() {
         return 1 - maximumDistance;
     }

@@ -1,5 +1,5 @@
 package apps.unstructured;
-
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.filter.Filter;
@@ -16,12 +16,13 @@ public record SimilaritySearchRequest(String question, Integer limit, Double max
         }
     }
 
+ @Schema(hidden = true)
     public Double getThreshold() {
         return 1 - maximumDistance;
     }
 
 
-
+ @Schema(hidden = true)
     public SearchRequest getSearchRequest() {
 
 

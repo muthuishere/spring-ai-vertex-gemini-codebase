@@ -1,0 +1,19 @@
+
+
+### Search by department
+POST {{baseurl}}/api/internaldata/chat
+Content-Type: application/json
+
+{
+  "question":"How is the revenue situation for the company?",
+  "department": "Executive Management"
+}
+
+### Search by department without department
+POST {{baseurl}}/api/internaldata/chat
+Content-Type: application/json
+
+{
+  "question":"How is the revenue situation for the company?"
+
+}
