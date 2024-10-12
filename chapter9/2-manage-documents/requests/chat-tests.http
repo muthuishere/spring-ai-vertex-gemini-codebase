@@ -1,0 +1,8 @@
+### Search by department
+POST {{baseurl}}/api/internal/agent/chat
+Content-Type: application/json
+
+{
+  "question": "Which is the frontend technology decided for the project?"
+
+}
