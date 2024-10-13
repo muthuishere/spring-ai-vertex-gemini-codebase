@@ -1,0 +1,56 @@
+### First Request
+
+POST https://{{spring.ai.vertex.ai.gemini.location}}-aiplatform.googleapis.com/v1/projects/{{spring.ai.vertex.ai.gemini.projectId}}/locations/us-central1/publishers/google/models/chat-bison@001:predict
+Authorization: Bearer {{gcloud_token}}
+Content-Type: application/json
+
+{
+  "instances": [
+    {
+      "messages": [
+        {"content": "My name is Mr. Rich, remember it."}
+      ]
+    }
+  ]
+
+}
+
+### Second Request
+
+POST https://{{spring.ai.vertex.ai.gemini.location}}-aiplatform.googleapis.com/v1/projects/{{spring.ai.vertex.ai.gemini.projectId}}/locations/us-central1/publishers/google/models/chat-bison@001:predict
+Authorization: Bearer {{gcloud_token}}
+Content-Type: application/json
+
+{
+  "instances": [
+    {
+      "messages": [
+        {"content": "Do you remember my name?"}
+      ]
+    }
+  ]
+
+}
+
+
+
+
+### Get from user
+
+
+POST https://{{spring.ai.vertex.ai.gemini.location}}-aiplatform.googleapis.com/v1/projects/{{spring.ai.vertex.ai.gemini.projectId}}/locations/us-central1/publishers/google/models/chat-bison@001:predict
+Authorization: Bearer {{gcloud_token}}
+Content-Type: application/json
+
+{
+  "instances": [
+    {
+       "messages": [
+        {"author": "user", "content": "My name is Mr. Rich, remember it"},
+        {"author": "bot", "content": "Noted, Mr. Rich."},
+        {"author": "user", "content": "Do you remember my name?"}
+      ]
+    }
+  ]
+
+}
