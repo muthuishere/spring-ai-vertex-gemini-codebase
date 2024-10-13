@@ -38,30 +38,8 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
-        implementation 'org.springframework.ai:spring-ai-vertex-ai-embedding-spring-boot-starter'
-
-
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    runtimeOnly 'org.postgresql:postgresql'
-    implementation 'org.springframework.ai:spring-ai-pgvector-store-spring-boot-starter'
-
-    // Google Cloud SQL related dependencies
-// https://mvnrepository.com/artifact/com.google.cloud/spring-cloud-gcp-starter-sql-postgresql
-    implementation "com.google.cloud:spring-cloud-gcp-starter-sql-postgresql"
-
-    testImplementation('org.testcontainers:junit-jupiter')
-    testImplementation('org.testcontainers:postgresql')
-
-
-
-    testCompileOnly('org.projectlombok:lombok')
-    testAnnotationProcessor('org.projectlombok:lombok')
-
-    // Google Cloud Storage related dependencies
-    implementation 'com.google.cloud:google-cloud-storage:2.42.0'
-    implementation 'org.springframework.ai:spring-ai-tika-document-reader'
-
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
 }
 
 dependencyManagement {
@@ -71,8 +49,6 @@ dependencyManagement {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }
-
-
 
 tasks.named('test') {
     useJUnitPlatform()
