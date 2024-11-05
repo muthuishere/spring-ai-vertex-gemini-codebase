@@ -1,6 +1,7 @@
 package apps.unstructured;
 
 import com.google.cloud.storage.Blob;
+import com.google.cloud.vertexai.VertexAI;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.document.Document;
@@ -36,6 +37,8 @@ public class InternalAgentController {
 //       TokenTextSplitter tokenTextSplitter = new TokenTextSplitter();
 //        documents = tokenTextSplitter.split(documents);
     private List<Document> readDocumentsWithTika(Resource resource) {
+
+        VertexAI vertexAI = VertexAI.builder().build();
         TikaDocumentReader tikaDocumentReader = new TikaDocumentReader(resource);
         List<Document> documents = tikaDocumentReader.read();
         TokenTextSplitter tokenTextSplitter = new TokenTextSplitter();
