@@ -38,7 +38,6 @@ public class InternalAgentController {
 //        documents = tokenTextSplitter.split(documents);
     private List<Document> readDocumentsWithTika(Resource resource) {
 
-        VertexAI vertexAI = VertexAI.builder().build();
         TikaDocumentReader tikaDocumentReader = new TikaDocumentReader(resource);
         List<Document> documents = tikaDocumentReader.read();
         TokenTextSplitter tokenTextSplitter = new TokenTextSplitter();

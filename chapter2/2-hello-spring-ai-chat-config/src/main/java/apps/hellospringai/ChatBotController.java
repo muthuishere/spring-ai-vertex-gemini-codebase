@@ -36,7 +36,7 @@ public class ChatBotController {
         String question = chatBotRequest.question();
         ChatOptions options = VertexAiGeminiChatOptions.builder()
                 .withMaxOutputTokens(100)
-                .withTemperature(0.5f)
+                .withTemperature(0.5)
                 .build();
         Prompt prompt = new Prompt(question, options);
 
