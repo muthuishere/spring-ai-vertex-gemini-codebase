@@ -1,0 +1,24 @@
+### Search by department
+POST {{baseurl}}/api/internal/agent/chat-with-advisor
+Content-Type: application/json
+
+{
+  "question": "Which is the frontend technology decided for the project?"
+
+}
+
+### Search by department with reference
+POST {{baseurl}}/api/internal/agent/chat
+Content-Type: application/json
+
+{
+  "question": "Which is the frontend technology decided for the project?"
+
+}
+
+#### Response
+
+//{
+//  "question": "Which is the frontend technology decided for the project?",
+//  "answer": "The team has not made a final decision yet. They are leaning towards React, but will review a prototype and further analysis before making a final decision in the next meeting on 12-Dec-2024. \n"
+//}
