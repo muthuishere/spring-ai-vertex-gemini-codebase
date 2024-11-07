@@ -1,0 +1,8 @@
+### Search by department
+POST {{baseurl}}/api/llama-chat
+Content-Type: application/json
+
+{
+  "question": "What is the god with single sword in hinduism?"
+
+}
