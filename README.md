@@ -1,27 +1,27 @@
 # Spring AI for Your Organization: GCP Vertex AI Edition
 
-This repository hosts the source code for *Spring AI for Your Organization: GCP Vertex AI Edition*, available at [Leanpub](https://leanpub.com/springai). This book guides readers on how to effectively integrate Google Cloud's Vertex AI with Spring to build specialized chatbots for organizational use.
+This repository hosts the source code for *Spring AI for Your Organization: GCP Vertex AI Edition*, available at [Leanpub](https://leanpub.com/springai). The book provides detailed guidance on leveraging Google Cloud's Vertex AI in conjunction with Spring to develop advanced chatbots specifically for organizational needs.
 
 ## Book Description
 
-Dive into the intricacies of chatbot development with a focus on scalability and efficiency, tailored for corporate environments. Each chapter offers in-depth tutorials on creating intelligent chat interfaces that can handle complex queries and provide meaningful interactions.
+Explore the process of creating intelligent chat systems that are capable of understanding and performing complex tasks, suitable for enhancing organizational interactions and functionalities.
 
 ## Repository Usage
 
-The code provided in this repository is intended for personal use and educational purposes by readers of the book. It is suitable for exploring the concepts discussed and for implementing the examples provided within a personal or academic setting.
+The source code here is provided for the personal and internal corporate use of readers who have purchased the book. It is intended to assist in the practical application of content discussed, allowing for implementation examples within personal or company projects.
 
-## Fair Use
+## Permitted Use
 
-Readers are allowed to use the code within the bounds of fair use, which includes:
-- Personal study and research.
-- Academic purposes or other educational settings.
-- Any other use that qualifies as fair use under copyright laws.
+- **Personal Study**: Individuals may use the code for personal learning and experimentation.
+- **Educational Use**: Educators and students may use the code within academic or training institutions.
+- **Internal Corporate Use**: Companies may use the code internally, but any use of the code to offer a commercial product or service to third parties is not permitted.
 
-## Redistribution and Commercial Use
+## Restrictions
 
-Redistribution of the code or commercial use is strictly prohibited without prior written consent from the author. This includes, but is not limited to, repackaging the code for commercial distribution and using the code as part of commercial projects.
+- **No Redistribution**: Redistribution of the code in any form is not allowed without explicit permission from the author.
+- **Commercial Use**: Using the code for commercial purposes, other than internal use as specified, without obtaining a license or permission is prohibited.
 
 ## License
 
-The code in this repository is released under a custom license that allows for personal use, study, and fair use as defined by copyright law. All other rights are reserved. Redistribution or use of the code beyond these permitted uses requires explicit permission from the publisher.
+This code is provided under a custom license, designed to allow personal study, educational purposes, and internal corporate use. All other rights, including the distribution and commercial use rights, are reserved unless explicitly granted by the publisher.
 
