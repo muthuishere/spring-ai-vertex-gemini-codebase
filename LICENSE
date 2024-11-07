@@ -1,0 +1,32 @@
+# License for "Spring AI for Your Organization: GCP Vertex AI Edition"
+
+## 1. Definitions
+
+- "The book" refers to "Spring AI for Your Organization: GCP Vertex AI Edition" sold through Leanpub.
+- "The author" refers to the creator(s) of the book and the accompanying source code.
+- "The code" refers to the source code available in the repository linked to the book.
+- "Internal corporate use" refers to usage within a company or organization but not towards any commercial offerings to external parties.
+
+## 2. Grant of License
+
+The author grants the reader of the book a non-exclusive, non-transferable license to use the code provided in the repository solely for:
+- Personal study and learning.
+- Educational purposes within academic or training institutions.
+- Internal corporate use within the reader's own organization.
+
+## 3. Restrictions
+
+- **Redistribution Prohibited**: The reader may not distribute the code, or any derivative works, in any format to any third party without prior written consent from the author.
+- **Commercial Use**: The reader may not use the code for any form of commercial product or service offering to third parties without obtaining a license or explicit permission from the author.
+
+## 4. No Warranty
+
+The code is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and noninfringement. In no event shall the authors be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the code or the use or other dealings in the code.
+
+## 5. Termination
+
+This license is effective until terminated by either party. The reader’s rights under this license will terminate automatically without notice from the author if the reader fails to comply with any of its terms and conditions. Upon termination, the reader shall cease all use of the code and delete all copies of the code.
+
+## 6. General
+
+This license shall be governed by the laws of the jurisdiction in which the author resides, without regard to its conflict of law provisions.
