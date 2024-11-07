@@ -1,0 +1,136 @@
+package apps.unstructured;
+
+import com.google.cloud.storage.Blob;
+import com.google.cloud.vertexai.VertexAI;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.ai.document.Document;
+import org.springframework.ai.reader.tika.TikaDocumentReader;
+import org.springframework.ai.transformer.splitter.TokenTextSplitter;
+import org.springframework.ai.vectorstore.SearchRequest;
+import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatModel;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.ai.vectorstore.VectorStore;
+import org.springframework.ai.chat.client.advisor.QuestionAnswerAdvisor;
+import org.springframework.ai.chat.client.ChatClient;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/internal/agent")
+@Slf4j
+public class InternalAgentController {
+    private final StorageBucketService storageBucketService;
+    private final VectorStore vectorStore;
+    private final VertexAiGeminiChatModel vertexAiGeminiChatModel;
+
+//       TokenTextSplitter tokenTextSplitter = new TokenTextSplitter();
+//        documents = tokenTextSplitter.split(documents);
+    private List<Document> readDocumentsWithTika(Resource resource) {
+
+        TikaDocumentReader tikaDocumentReader = new TikaDocumentReader(resource);
+        List<Document> documents = tikaDocumentReader.read();
+        TokenTextSplitter tokenTextSplitter = new TokenTextSplitter();
+        List<Document> chunkedDocuments = tokenTextSplitter.split(documents);
+        return chunkedDocuments;
+    }
+
+    public List<Document> toFormatted(List<Document> docs){
+
+
+        return docs.stream()
+                .map(doc ->{
+                  Document newdoc=  Document.builder()
+                            .withMetadata(doc.getMetadata())
+                            .withContent(doc.getContent().substring(0, Math.min(10, doc.getContent().length() - 1)) + "...")
+                            .withId(doc.getId())
+                            .build();
+                    float[] embedding = doc.getEmbedding();
+                    //trim float array to 3
+                    float[] newEmbedding = new float[3];
+                    for(int i = 0; i < 3; i++){
+                        newEmbedding[i] = embedding[i];
+                    }
+                  newdoc.setEmbedding(newEmbedding);
+                    return newdoc;
+                })
+                .toList();
+
+    }
+
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> uploadFile(@RequestPart MultipartFile file) {
+
+
+        try {
+            Resource resource = file.getResource();
+            String filename = file.getOriginalFilename();
+            byte[] bytes = file.getBytes();
+            String fileID = storageBucketService.uploadFile(filename, bytes);
+
+            List<Document> documents = readDocumentsWithTika(resource);
+            documents.forEach(document -> document.getMetadata().put("fileID", fileID));
+
+            vectorStore.add(documents);
+
+            Map<String,Object> response = Map.of("fileID", fileID, "documents", documents);
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        } catch (IOException e) {
+          return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+
+    }
+
+    @GetMapping("/file/{fileID}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable String fileID) {
+        Blob blob = storageBucketService.getFile(fileID);
+
+        if(blob == null){
+            return ResponseEntity.notFound().build();
+        }
+        byte[] content = blob.getContent();
+        ByteArrayResource resource = new ByteArrayResource(content);
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileID + "\"")
+                .body(resource);
+    }
+
+    @PostMapping("/chat")
+    public ChatBotResponse answerQuestion(@RequestBody InternalSearchRequest internalSearchRequest) {
+
+         String question = internalSearchRequest.question();
+        SearchRequest searchRequest = SearchRequest.query(question);
+
+
+        QuestionAnswerAdvisor questionAnswerAdvisor = new QuestionAnswerAdvisor(vectorStore, searchRequest);
+        var chatClientRequest = ChatClient.builder(vertexAiGeminiChatModel).build()
+                .prompt()
+                .advisors(questionAnswerAdvisor)
+                .user(question);
+
+
+
+
+        var chatResponse = chatClientRequest
+                .call()
+                .chatResponse();
+
+        String answer = chatResponse.getResult().getOutput().getContent();
+
+
+
+
+        return new ChatBotResponse(question, answer);
+    }
+}

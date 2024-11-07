@@ -7,6 +7,7 @@ import org.springframework.ai.model.function.FunctionCallbackWrapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.ai.model.function.FunctionCallbackContext; 
 
 @SpringBootApplication
 public class NaturalSqlAiApplication {
@@ -20,7 +21,7 @@ public class NaturalSqlAiApplication {
     public FunctionCallbackWrapper<QueryRequest, QueryResponse> llmSqlQueryExecutorFunction(LLMSqlQueryExecutor llmSqlQueryExecutor) {
         return FunctionCallbackWrapper.builder(llmSqlQueryExecutor)
                 .withName("execute_sql_queries")
-                .withSchemaType(FunctionCallbackWrapper.Builder.SchemaType.OPEN_API_SCHEMA)
+                .withSchemaType(FunctionCallbackContext.SchemaType.OPEN_API_SCHEMA)
                 .withDescription("Execute SQL queries")
                 .build();
     }
