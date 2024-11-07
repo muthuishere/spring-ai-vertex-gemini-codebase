@@ -13,6 +13,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MimeType;
+import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.ai.vectorstore.VectorStore;
@@ -72,7 +74,7 @@ public class ImageEmbeddingChatController {
 
 
 
-    @PostMapping("/chat")
+        @PostMapping("/chat")
     public ChatBotResponse answerQuestion(@RequestBody InternalSearchRequest internalSearchRequest) {
         String question = internalSearchRequest.question();
         SearchRequest searchRequest = internalSearchRequest.getSearchRequest();
@@ -88,22 +90,13 @@ public class ImageEmbeddingChatController {
                 .collect(Collectors.joining(System.lineSeparator()));
 
         List<Media> medias=documents.stream()
-                .map(doc-> embeddingMediaProcessor.getMedia(doc))
+                .map(doc-> getMedia(doc))
                 .collect(Collectors.toList());
 
         var systemPrompt = "You are an AI assistant. Provide the answer based solely on the provided context.\n\n";
-        var userPrompt1 = "Question: " + question + "\n\n" +
-                         "Below is the context history:\n\n" + contextHistory + "\n\n" +
-                         "Please provide a detailed answer to the question based on the context history. In your response, include:\n" +
-                         "- The answer to the question.\n" +
-                         "- Any relevant reference URL(s).\n" +
-                         "- Page numbers if available.\n\n" +
-                         "Ensure that your answer is clear and references are properly cited.";;
-
-        var userPrompt = "Question: " + question + "\n\n" + "Context:\n" + contextHistory + "\n\n" + "Please provide the answer to the question based on context history \n  Also add a reference url pointing to it based on context history";
-        ;
-
         var systemMessage = new SystemMessage(systemPrompt);
+
+        var userPrompt = "Question: " + question + "\n\n" + "Context:\n" + contextHistory + "\n\n" + "Please provide the answer to the question based on context history \n  Also add a reference url pointing to it based on context history along with page number";
         var userMessage = new UserMessage(userPrompt,medias);
 
         var chatClientRequest = ChatClient.builder(vertexAiGeminiChatModel)
@@ -117,6 +110,21 @@ public class ImageEmbeddingChatController {
         return new ChatBotResponse(question, answer);
     }
 
+
+    public Media getMedia(Document document) {
+
+
+        String   pageImageId = document.getMetadata().get("pageImageId").toString();
+        Blob blob = storageBucketService.getFile(pageImageId);
+
+
+        byte[] content = blob.getContent();
+        ByteArrayResource byteArrayResource = new ByteArrayResource(content);
+
+        return new Media(MimeTypeUtils.IMAGE_PNG, byteArrayResource) ;
+
+
+    }
     @GetMapping("/file/{fileID}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileID) {
         Blob blob = storageBucketService.getFile(fileID);

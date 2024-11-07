@@ -55,13 +55,13 @@ public class EmbeddingMediaProcessor {
 
         Resource imageResource = pdfPage.getPageResource();
         byte[] bytes = imageResource.getContentAsByteArray();
-        String fileId= storageBucketService.uploadFile(pageFilename, bytes);
+        String pageImageId= storageBucketService.uploadFile(pageFilename, bytes);
 
 
         Map<String, Object> pageMetadata = new HashMap<>(baseMetadata);
         pageMetadata.put("page", pageNumber);
         pageMetadata.put("mimeType", MimeTypeUtils.IMAGE_PNG_VALUE);
-        pageMetadata.put("pageImageId", fileId);
+        pageMetadata.put("pageImageId", pageImageId);
 
         return Document.builder()
                 .withContent(pageFilename)
@@ -72,19 +72,6 @@ public class EmbeddingMediaProcessor {
 
 
 
-    public Media getMedia(Document document) {
-        String pageImageId = null;
-        String mimeType = null;
-        mimeType = document.getMetadata().get("mimeType").toString();
-        pageImageId = document.getMetadata().get("pageImageId").toString();
-
-        Blob blob = storageBucketService.getFile(pageImageId);
-        byte[] content = blob.getContent();
-        ByteArrayResource byteArrayResource = new ByteArrayResource(content);
-        MimeType mimeTypeFromExtension = MimeTypeUtils.parseMimeType(mimeType);
-        return new Media(mimeTypeFromExtension, byteArrayResource)
-                ;
-    }
 
 
 }
