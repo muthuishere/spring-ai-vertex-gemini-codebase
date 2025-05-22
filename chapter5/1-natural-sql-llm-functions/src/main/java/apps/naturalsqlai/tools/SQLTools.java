@@ -1,4 +1,4 @@
-package apps.naturalsqlai.products.tools;
+package apps.naturalsqlai.tools;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
