@@ -5,18 +5,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
-import org.springframework.ai.chat.memory.InMemoryChatMemory;
-import org.springframework.ai.chat.messages.UserMessage;
-import org.springframework.ai.chat.model.ChatResponse;
-import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatModel;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-
-import static org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvisor.CHAT_MEMORY_CONVERSATION_ID_KEY;
+import static org.springframework.ai.chat.memory.ChatMemory.CONVERSATION_ID;
 
 @RestController
 @Slf4j
@@ -30,7 +24,7 @@ public class ChatBotController {
 
     public ChatBotController(VertexAiGeminiChatModel vertexAiGeminiChatModel ,ChatMemory chatMemory) {
 
-        MessageChatMemoryAdvisor messageChatMemoryAdvisor = new MessageChatMemoryAdvisor(chatMemory);
+        MessageChatMemoryAdvisor messageChatMemoryAdvisor = MessageChatMemoryAdvisor.builder(chatMemory).build();
         inMemoryChatClient = ChatClient.builder(vertexAiGeminiChatModel)
                 .defaultAdvisors(messageChatMemoryAdvisor)
                 .build();
@@ -46,13 +40,13 @@ public class ChatBotController {
                 .prompt()
                 .system("You are my personal assistant")
                 .user(question)
-                .advisors(a -> a.param(CHAT_MEMORY_CONVERSATION_ID_KEY, sessionId));
+                .advisors(a -> a.param(CONVERSATION_ID, sessionId));
 
 
         var chatResponse = chatRequest.call().chatResponse();
 
-//        // get the answer
-        String answer = chatResponse.getResult().getOutput().getContent();
+        // get the answer
+        String answer = chatResponse.getResult().getOutput().getText();
 
 
         log.info("ChatBotController: askQuestion: answer: {}", answer);
