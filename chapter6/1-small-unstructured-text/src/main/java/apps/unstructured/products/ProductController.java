@@ -70,12 +70,8 @@ public class ProductController {
 
     }
 
-
-
     public Optional<Product> getProductById(@PathVariable("id") String productId) {
         return productRepository.findById(productId);
 
     }
-
-
 }
