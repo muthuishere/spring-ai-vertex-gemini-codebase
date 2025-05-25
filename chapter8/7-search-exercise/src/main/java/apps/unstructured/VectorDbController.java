@@ -69,7 +69,7 @@ public class VectorDbController {
 
         SearchRequest searchRequest = similaritySearchRequest.getSearchRequest();
 
-        QuestionAnswerAdvisor questionAnswerAdvisor = org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor.builder(vectorStore)
+        QuestionAnswerAdvisor questionAnswerAdvisor = QuestionAnswerAdvisor.builder(vectorStore)
                 .searchRequest(searchRequest)
                 .build();
 
