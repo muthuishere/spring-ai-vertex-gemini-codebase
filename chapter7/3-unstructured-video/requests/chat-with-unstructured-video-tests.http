@@ -59,9 +59,9 @@ content-type: application/json
 }
 
 > {%
-    client.test("Check if the response has PG", function() {
+    client.test("Check if the voice is male", function() {
         responseBody = JSON.stringify(response.body);
-        client.assert(responseBody.toLowerCase().includes("PG".toLowerCase()));
+        client.assert(responseBody.toLowerCase().includes("male".toLowerCase()));
     });
 %}
 
