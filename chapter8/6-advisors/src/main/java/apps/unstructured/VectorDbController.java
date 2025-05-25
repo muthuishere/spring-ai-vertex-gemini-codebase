@@ -1,10 +1,9 @@
 package apps.unstructured;
 
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.client.advisor.QuestionAnswerAdvisor;
+import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.vectorstore.SearchRequest;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 
@@ -70,7 +68,9 @@ public class VectorDbController {
 
         SearchRequest searchRequest = similaritySearchRequest.getSearchRequest();
 
-        QuestionAnswerAdvisor questionAnswerAdvisor = new QuestionAnswerAdvisor(vectorStore, searchRequest);
+        QuestionAnswerAdvisor questionAnswerAdvisor = QuestionAnswerAdvisor.builder(vectorStore)
+                                                                            .searchRequest(searchRequest)
+                                                                            .build();
 
         var chatClientRequest = ChatClient.builder(vertexAiGeminiChatModel).build()
                 .prompt()
@@ -82,21 +82,9 @@ public class VectorDbController {
                 .call()
                 .chatResponse();
 
-        String answer = chatResponse.getResult().getOutput().getContent();
+        String answer = chatResponse.getResult().getOutput().getText();
 
         return new ChatBotResponse(question, answer);
 
-    }
-
-
-    // A Helper method to see whats inside the documents
-
-    private static List<Document> formatResults(List<Document> documents) {
-        return documents.stream().map(document -> {
-            float[] embedding = document.getEmbedding();
-            embedding = new float[]{embedding[0], embedding[1]};
-            document.setEmbedding(embedding);
-            return document;
-        }).collect(Collectors.toList());
     }
 }
