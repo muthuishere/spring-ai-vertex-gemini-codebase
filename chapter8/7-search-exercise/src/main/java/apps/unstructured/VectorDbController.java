@@ -3,6 +3,7 @@ package apps.unstructured;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.vectorstore.SearchRequest;
@@ -68,7 +69,7 @@ public class VectorDbController {
 
         SearchRequest searchRequest = similaritySearchRequest.getSearchRequest();
 
-        org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor questionAnswerAdvisor = org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor.builder(vectorStore)
+        QuestionAnswerAdvisor questionAnswerAdvisor = org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor.builder(vectorStore)
                 .searchRequest(searchRequest)
                 .build();
 
