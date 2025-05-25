@@ -46,19 +46,5 @@ public class VectorDbController {
         List<Document> documents = vectorStore.similaritySearch(searchRequest);
 
         return documents;
-    
-
-    }
-
-
-    // A Helper method to see whats inside the documents
-
-    private static List<Document> formatResults(List<Document> documents) {
-        return documents.stream().map(document -> {
-            float[] embedding = document.getEmbedding();
-            embedding = new float[]{embedding[0], embedding[1]};
-            document.setEmbedding(embedding);
-            return document;
-        }).collect(Collectors.toList());
     }
 }

@@ -72,7 +72,7 @@ public class LocallamaChatModel {
 
     @SneakyThrows
     public synchronized ChatResponse call(Prompt prompt) {
-        String question = prompt.getInstructions().getFirst().getContent();
+        String question = prompt.getInstructions().getFirst().getText();
         String answer = getAnswer(question);
 
         AssistantMessage assistantMessage = new AssistantMessage(answer);

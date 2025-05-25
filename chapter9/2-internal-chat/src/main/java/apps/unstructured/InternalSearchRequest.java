@@ -29,7 +29,11 @@ public record InternalSearchRequest(String question, String category,
         var parser = new FilterExpressionTextParser();
         var expression = expressionString.isEmpty() ? null : parser.parse(expressionString);
 
-        return SearchRequest.query(question).withFilterExpression(expression);
+
+        return SearchRequest.builder()
+                .query(question)
+                .filterExpression(expression)
+                .build();
 
     }
 

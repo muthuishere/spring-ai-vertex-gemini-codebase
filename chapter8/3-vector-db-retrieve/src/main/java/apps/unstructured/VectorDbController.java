@@ -41,7 +41,9 @@ public class VectorDbController {
     public List<Document> handleSimilarSearchQuery(@RequestBody SimilaritySearchRequest similaritySearchRequest) {
 
         SearchRequest searchRequest =
-                SearchRequest.query(similaritySearchRequest.question());
+                SearchRequest.builder()
+                        .query(similaritySearchRequest.question())
+                        .build();
 
         List<Document> documents = vectorStore.similaritySearch(searchRequest);
 

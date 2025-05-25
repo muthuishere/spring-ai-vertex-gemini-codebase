@@ -2,6 +2,7 @@ package apps.unstructured;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.reader.tika.TikaDocumentReader;
 import org.springframework.ai.transformer.splitter.TokenTextSplitter;
@@ -14,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.ai.vectorstore.VectorStore;
-import org.springframework.ai.chat.client.advisor.QuestionAnswerAdvisor;
 import org.springframework.ai.chat.client.ChatClient;
 
 import java.io.IOException;
@@ -83,7 +83,10 @@ public class InternalAgentController {
 
         SearchRequest searchRequest = internalSearchRequest.getSearchRequest();
 
-        QuestionAnswerAdvisor questionAnswerAdvisor = new QuestionAnswerAdvisor(vectorStore, searchRequest);
+        QuestionAnswerAdvisor questionAnswerAdvisor = QuestionAnswerAdvisor.builder(vectorStore)
+                .searchRequest(searchRequest)
+                .build();
+
         var chatClientRequest = ChatClient.builder(vertexAiGeminiChatModel).build()
                 .prompt()
                 .advisors(questionAnswerAdvisor)
@@ -93,7 +96,7 @@ public class InternalAgentController {
                 .call()
                 .chatResponse();
 
-        String answer = chatResponse.getResult().getOutput().getContent();
+        String answer = chatResponse.getResult().getOutput().getText();
         return new ChatBotResponse(question, answer);
     }
     @PostMapping("/chat")
@@ -103,7 +106,7 @@ public class InternalAgentController {
         List<Document> documents = vectorStore.similaritySearch(searchRequest);
 
         String contextHistory = documents.stream()
-                .map(Document::getContent)
+                .map(Document::getText)
                 .collect(Collectors.joining(System.lineSeparator()));
 
         var systemPrompt = "You are an AI assistant. Provide the answer based solely on the provided context.\n\n";
@@ -116,7 +119,7 @@ public class InternalAgentController {
                 .user(userPrompt);
 
         var chatResponse = chatClientRequest.call().chatResponse();
-        String answer = chatResponse.getResult().getOutput().getContent();
+        String answer = chatResponse.getResult().getOutput().getText();
 
         return new ChatBotResponse(question, answer);
     }

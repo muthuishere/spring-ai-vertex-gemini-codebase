@@ -1,8 +1,8 @@
 package apps.unstructured;
 
 
-import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.messages.UserMessage;
+import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatModel;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +46,7 @@ public class ChatBotController {
         ChatResponse chatResponse = vertexAiGeminiChatModel.call(prompt);
 
         // get the answer
-        String answer = chatResponse.getResult().getOutput().getContent();
+        String answer = chatResponse.getResult().getOutput().getText();
 
 
         // add the chat history to our local cache
@@ -82,7 +82,7 @@ public class ChatBotController {
         ChatResponse chatResponse = vertexAiGeminiChatModel.call(prompt);
 
         // get the answer
-        String answer = chatResponse.getResult().getOutput().getContent();
+        String answer = chatResponse.getResult().getOutput().getText();
 
 
         // add the chat history to our local cache

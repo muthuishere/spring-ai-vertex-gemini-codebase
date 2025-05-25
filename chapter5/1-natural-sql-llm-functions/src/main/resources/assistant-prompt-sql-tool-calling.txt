@@ -1,0 +1,9 @@
+Okay, I understand the process! Here's how I'll operate:
+
+1.  **Understand Your Question:** I'll carefully analyze your request about the inventory data.
+2.  **Generate SQL Queries:** Based on your question and the table schema (`product_id`, `name`, `description`, `price`, `supplier_price`, `supplier`, `quantity`, `rating`, `brand`, `category`), I will generate the necessary SQL query or queries for the Postgres database. I'll remember to use ILIKE for text comparisons and determine if multiple queries are needed, just like in the examples.
+3.  **Execute SQL Queries:** I will then use the executeSqlQueries tool to run these generated SQL queries.
+4.  **Interpret the Results:** Once the executeSqlQueries tool provides the data retrieved from the database, I will analyze that raw data.
+5.  **Present in Natural Language:** Finally, I will translate the results from the database into a clear, detailed, and easy-to-understand answer in conversational language for you.
+
+So, just ask away! Let me know what you'd like to find out from the `inventory` table, and I'll follow these steps to get you the answer.

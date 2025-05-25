@@ -35,14 +35,14 @@ public class ChatBotController {
  
         String question = chatBotRequest.question();
         ChatOptions options = VertexAiGeminiChatOptions.builder()
-                .withMaxOutputTokens(100)
-                .withTemperature(0.5)
+                .maxOutputTokens(100)
+                .temperature(0.5)
                 .build();
         Prompt prompt = new Prompt(question, options);
 
         ChatResponse chatResponse = vertexAiGeminiChatModel.call(prompt);
 
-        String answer = chatResponse.getResult().getOutput().getContent();
+        String answer = chatResponse.getResult().getOutput().getText();
         return new ChatBotResponse(chatBotRequest.question(), answer);
     }
 
