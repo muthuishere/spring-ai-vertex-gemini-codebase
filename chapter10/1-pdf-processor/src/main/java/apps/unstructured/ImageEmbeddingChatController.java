@@ -3,8 +3,8 @@ package apps.unstructured;
 import com.google.cloud.storage.Blob;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.ai.content.Media;
 import org.springframework.ai.document.Document;
-import org.springframework.ai.model.Media;
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatModel;
 import org.springframework.core.io.ByteArrayResource;
@@ -83,7 +83,7 @@ public class ImageEmbeddingChatController {
 
         // Need to add the reference URL in the context so that llm can generate the answer based on the context and also where it can download
         String contextHistory = documents.stream()
-                .map(document ->  document.getContent() +
+                .map(document ->  document.getText() +
                                   System.lineSeparator() + "  Reference Page Number:" +  document.getMetadata().get("page").toString() +
                                   System.lineSeparator() + "  Reference File URL: http://localhost:8080/api/internal/agent/file/" +  document.getMetadata().get("fileID").toString()
                 )
@@ -97,7 +97,10 @@ public class ImageEmbeddingChatController {
         var systemMessage = new SystemMessage(systemPrompt);
 
         var userPrompt = "Question: " + question + "\n\n" + "Context:\n" + contextHistory + "\n\n" + "Please provide the answer to the question based on context history \n  Also add a reference url pointing to it based on context history along with page number";
-        var userMessage = new UserMessage(userPrompt,medias);
+        var userMessage = UserMessage.builder()
+                            .text(userPrompt)
+                            .media(medias)
+                            .build();
 
         var chatClientRequest = ChatClient.builder(vertexAiGeminiChatModel)
                 .build()
@@ -105,7 +108,7 @@ public class ImageEmbeddingChatController {
                 .messages(List.of(systemMessage,userMessage));
 
         var chatResponse = chatClientRequest.call().chatResponse();
-        String answer = chatResponse.getResult().getOutput().getContent();
+        String answer = chatResponse.getResult().getOutput().getText();
 
         return new ChatBotResponse(question, answer);
     }
