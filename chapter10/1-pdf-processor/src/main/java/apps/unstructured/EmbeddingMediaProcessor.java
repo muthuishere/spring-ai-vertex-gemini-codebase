@@ -1,19 +1,15 @@
 package apps.unstructured;
 
-import com.google.cloud.storage.Blob;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.content.Media;
 import org.springframework.ai.document.Document;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
-import org.springframework.util.MimeType;
 import org.springframework.util.MimeTypeUtils;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
