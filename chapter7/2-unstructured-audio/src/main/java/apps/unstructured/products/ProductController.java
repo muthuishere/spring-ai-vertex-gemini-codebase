@@ -43,7 +43,6 @@ public class ProductController {
     public ChatBotResponse chatWithInventory(@RequestBody ChatBotRequest chatBotRequest) {
 
         String question = chatBotRequest.question();
-        ;
 
         String context = productAiService.readFromClasspath("generate-sql-tool-calling-prompt.txt");
         String assistantMessage = productAiService.readFromClasspath("generate-sql-tool-calling-prompt.txt");
