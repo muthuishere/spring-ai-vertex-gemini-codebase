@@ -26,10 +26,11 @@ public record SimilaritySearchRequest(String question, Integer limit, Double max
     public SearchRequest getSearchRequest() {
 
 
-        SearchRequest searchRequest = SearchRequest
+        SearchRequest searchRequest = SearchRequest.builder()
                 .query(question)
-                .withTopK(limit)
-                .withSimilarityThreshold(getThreshold());
+                .topK(limit)
+                .similarityThreshold(getThreshold())
+                .build();
 
 
         if(department != null) {
@@ -37,9 +38,8 @@ public record SimilaritySearchRequest(String question, Integer limit, Double max
                     new FilterExpressionBuilder()
                             .eq("department", department)
                             .build();
-            searchRequest = searchRequest.withFilterExpression(expression);
+            searchRequest = SearchRequest.from(searchRequest).filterExpression(expression).build();
         }
-
 
         return searchRequest;
 
