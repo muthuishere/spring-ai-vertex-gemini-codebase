@@ -29,11 +29,12 @@ public record SimilaritySearchRequest(String question, Integer limit, Double max
                         .eq("department", department)
                         .build();
 
-        SearchRequest searchRequest = SearchRequest
+        SearchRequest searchRequest = SearchRequest.builder()
                 .query(question)
-                .withTopK(limit)
-                .withSimilarityThreshold(getThreshold())
-                .withFilterExpression(expression);
+                .topK(limit)
+                .similarityThreshold(getThreshold())
+                .filterExpression(expression)
+                .build();
 
         return searchRequest;
 

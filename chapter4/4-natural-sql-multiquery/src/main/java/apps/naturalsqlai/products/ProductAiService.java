@@ -69,7 +69,7 @@ public class ProductAiService {
         ChatResponse chatResponse = vertexAiGeminiChatModel.call(prompt);
 
         // get the answer
-        String answer = chatResponse.getResult().getOutput().getContent();
+        String answer = chatResponse.getResult().getOutput().getText();
         return answer;
     }
 
@@ -94,7 +94,7 @@ public class ProductAiService {
         ChatResponse chatResponse = vertexAiGeminiChatModel.call(prompt);
 
         // get the answer
-        String result = chatResponse.getResult().getOutput().getContent();
+        String result = chatResponse.getResult().getOutput().getText();
         log.info("result: " + result);
         return result;
     }

@@ -1,44 +1,37 @@
-package apps.naturalsqlai.products.sql;
+package apps.naturalsqlai.tools;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 
-@Slf4j
 @RequiredArgsConstructor
-@Component
-public class LLMSqlQueryExecutor implements Function<QueryRequest, QueryResponse> {
+@Slf4j
+public class SQLTools {
+
     private final JdbcTemplate jdbcTemplate;
 
-
-
+    @Tool(description = "Execute the provided SQL Queries and get the response as JSON String")
     @SneakyThrows
-    public QueryResponse apply(QueryRequest queryRequest) {
-        log.info("Processing request: " + queryRequest);
+    public String executeSqlQueries(List<String> sqls) {
 
-        List<String> sqls = queryRequest.sqls();
-        List<String> sqlQueryResults = executeSqlQueries(sqls);
+        List<String> sqlQueryResults = executeSql(sqls);
 
         //Convert the list of results to JSON
         ObjectMapper objectMapper = new ObjectMapper();
         String sqlResultsInJsonFormat = objectMapper.writeValueAsString(sqlQueryResults);
 
         log.info("Returning response: " + sqlResultsInJsonFormat);
-        return new QueryResponse(sqlResultsInJsonFormat);
+        return sqlResultsInJsonFormat;
     }
 
-
-
-
-    private List<String> executeSqlQueries(List<String> sqlQueries) {
+    private List<String> executeSql(List<String> sqlQueries) {
         List<String> sqlQueryResults = new ArrayList<>();
         for (String query : sqlQueries) {
             String jsonData = queryToJson(query);
@@ -54,6 +47,4 @@ public class LLMSqlQueryExecutor implements Function<QueryRequest, QueryResponse
         return mapper.writeValueAsString(rows);
 
     }
-
-
 }

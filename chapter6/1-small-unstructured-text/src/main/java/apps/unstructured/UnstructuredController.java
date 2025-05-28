@@ -3,12 +3,13 @@ package apps.unstructured;
 import apps.unstructured.products.ProductAiService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
 import org.springframework.ai.chat.model.ChatResponse;
-import org.springframework.ai.model.Media;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.messages.SystemMessage;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.prompt.Prompt;
+import org.springframework.ai.content.Media;
 import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatModel;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.MimeTypeUtils;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -46,8 +48,10 @@ public class UnstructuredController {
         Media textMedia = new Media(MimeTypeUtils.TEXT_PLAIN, textData);
 
 
-        var userMessage = new UserMessage(question,
-                List.of(textMedia));
+        var userMessage = UserMessage.builder()
+                            .text(question)
+                            .media(textMedia)
+                            .build();
 
         var messages = new ArrayList<Message>();
         messages.add(systemMessage);
@@ -60,7 +64,7 @@ public class UnstructuredController {
 
         log.info("Response: {}", chatResponse);
         // get the answer
-        String answer = chatResponse.getResult().getOutput().getContent();
+        String answer = chatResponse.getResult().getOutput().getText();
 
 
         return new ChatBotResponse(question, answer);

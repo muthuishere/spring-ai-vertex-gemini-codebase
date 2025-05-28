@@ -31,11 +31,3 @@ Sample Questions and answers are given below
 Use the ILIKE operator for any conditions involving text fields such as 'brand' or 'category' or 'name' or 'supplier'.
 Determine the number of SQL queries needed to address the question based on its requirements and generate them accordingly.
 Return the queries as a JSON array. If there is one query, return ["translated_query"]. If there are multiple queries, return them in the format ["translated_query1","translated_query2",...]. If no relevant query can be generated, return an empty JSON array.
-
-
-
-2. Execute the SQL queries in database
-    Call the function execute_sql_queries(queries) with the queries as input , the queries should be of type of list of strings
-
-3. Based on the results convert it to natural language
-

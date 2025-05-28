@@ -1,10 +1,11 @@
 package apps.hellospringaiconversation;
 
+import org.springframework.ai.chat.memory.InMemoryChatMemoryRepository;
+import org.springframework.ai.chat.memory.MessageWindowChatMemory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.ai.chat.memory.ChatMemory;
-import org.springframework.ai.chat.memory.InMemoryChatMemory;
 
 @SpringBootApplication
 public class HelloSpringAiConversationApplication {
@@ -15,7 +16,7 @@ public class HelloSpringAiConversationApplication {
 
     @Bean
     ChatMemory chatMemory() {
-        return new InMemoryChatMemory();
+        return MessageWindowChatMemory.builder().build();
     }
 
 

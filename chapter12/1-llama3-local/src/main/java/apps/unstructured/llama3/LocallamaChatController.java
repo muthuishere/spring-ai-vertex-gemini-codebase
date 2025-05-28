@@ -253,7 +253,7 @@ public class LocallamaChatController {
         log.info("prompt: {}", prompt);
         ChatResponse chatResponse = locallamaChatModel.call(prompt);
         log.info("chatResponse: {}", chatResponse);
-        String answer = chatResponse.getResult().getOutput().getContent();
+        String answer = chatResponse.getResult().getOutput().getText();
         return new ChatBotResponse(chatBotRequest.question(), answer);
     }
 }

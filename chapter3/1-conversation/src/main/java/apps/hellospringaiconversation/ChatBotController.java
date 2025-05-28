@@ -47,7 +47,7 @@ public class ChatBotController {
         ChatResponse chatResponse = vertexAiGeminiChatModel.call(prompt);
 
         // get the answer
-        String answer = chatResponse.getResult().getOutput().getContent();
+        String answer = chatResponse.getResult().getOutput().getText();
 
         // add the chat history to our local cache
         chatBotHistoryManager.addChatHistory(sessionId, question, answer);

@@ -1,5 +1,5 @@
 ### Get Product By ID
-GET http://localhost:8080/api/products/X0000001
+GET http://localhost:8080/api/products/X000001
 
 
 > {%
