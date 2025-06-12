@@ -1,0 +1,102 @@
+
+
+### OpenAI-Style Gemini – Find Product by Name multiple
+
+POST https://aiplatform.googleapis.com/v1beta1/projects/myspringai-test/locations/global/endpoints/openapi/chat/completions
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "model": "google/gemini-2.0-flash",
+  "messages": [
+    { "role": "user", "content": "Do you have AirPods Pro or Samsung Galaxy" }
+  ],
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "findProductByName",
+        "description": "Finds a product based on its name or description",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "name or description of the product to find"
+            }
+          },
+          "required": ["name"]
+        }
+      }
+    }
+  ],
+  "tool_choice": "auto"
+}
+
+
+
+### Send two function responses
+POST https://aiplatform.googleapis.com/v1beta1/projects/myspringai-test/locations/global/endpoints/openapi/chat/completions
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "model": "google/gemini-2.0-flash",
+  "messages": [
+    { "role": "user", "content": "Do you have AirPods Pro or Samsung Galaxy?" },
+    {
+      "role": "assistant",
+      "tool_calls": [
+        {
+          "id": "call-1",
+          "function": {
+            "name": "findProductByName",
+            "arguments": "{\"name\":\"AirPods Pro\"}"
+          },
+          "type": "function"
+        },
+        {
+          "id": "call-2",
+          "function": {
+            "name": "findProductByName",
+            "arguments": "{\"name\":\"Samsung Galaxy\"}"
+          },
+          "type": "function"
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "name": "findProductByName",
+      "tool_call_id": "call-1",
+      "content": "{\"name\":\"TShirts\",\"price\":25,\"quantity\":40}"
+    },
+    {
+      "role": "tool",
+      "name": "findProductByName",
+      "tool_call_id": "call-2",
+      "content": "{\"name\":\"Watches\",\"price\":199,\"quantity\":5}"
+    }
+  ]
+,
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "findProductByName",
+        "description": "Finds a product based on its name or description",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "name or description of the product to find"
+            }
+          },
+          "required": ["name"]
+        }
+      }
+    }
+  ]
+}
+

@@ -1,0 +1,15 @@
+### Chat with SQL for single product
+POST http://localhost:8080/api/products/chat-with-sql
+Content-Type: application/json
+
+{
+  "question": "Do you have Airpods Pro?"
+}
+
+### Chat with SQL for multiple products
+POST http://localhost:8080/api/products/chat-with-sql
+Content-Type: application/json
+
+{
+  "question": "Do you have AirPods Pro or Samsung Galaxy?"
+}

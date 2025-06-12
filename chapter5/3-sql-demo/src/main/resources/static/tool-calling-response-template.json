@@ -1,0 +1,46 @@
+
+{
+  "model": "%model%",
+  "messages": [
+    { "role": "user", "content": "%question%" },
+    {
+      "role": "assistant",
+      "tool_calls": [
+        {
+          "id": "findProductByName",
+          "function": {
+            "name": "findProductByName",
+            "arguments": "%args%"
+          },
+          "type": "function"
+        }
+      ]
+
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "%tool_call_id%",
+      "content": "%tool_call_response%"
+    }
+  ],
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "findProductByName",
+        "description": "Finds a product based on its name or description",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "name or description of the product to find"
+            }
+          },
+          "required": ["name"]
+        }
+      }
+    }
+  ],
+  "tool_choice": "auto"
+}

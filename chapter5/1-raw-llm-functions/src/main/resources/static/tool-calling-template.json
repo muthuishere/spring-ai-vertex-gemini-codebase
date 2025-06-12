@@ -1,0 +1,27 @@
+
+{
+  "model": "%model%",
+  "messages": [
+    { "role": "user", "content": "%question%" }
+  ],
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "findProductByName",
+        "description": "Finds a product based on its name or description",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "name or description of the product to find"
+            }
+          },
+          "required": ["name"]
+        }
+      }
+    }
+  ],
+  "tool_choice": "auto"
+}

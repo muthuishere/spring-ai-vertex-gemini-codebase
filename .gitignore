@@ -78,3 +78,9 @@ recordings
 **/node_modules/
 
 models
+wip/
+appendix/
+
+
+**/http-client.env.json
+**/http-client.*.json

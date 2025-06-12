@@ -1,0 +1,107 @@
+### Gemini API - What is your name?
+
+
+
+POST https://aiplatform.googleapis.com/v1beta1/projects/myspringai-test/locations/global/endpoints/openapi/chat/completions
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "model": "google/gemini-2.0-flash",
+  "messages": [
+    { "role": "user", "content": "Whats your name" }
+
+
+  ]
+}
+
+
+### Gemini API -  Tool Function
+
+POST https://aiplatform.googleapis.com/v1beta1/projects/myspringai-test/locations/global/endpoints/openapi/chat/completions
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "model": "google/gemini-2.0-flash",
+  "messages": [
+    { "role": "user", "content": "Do you have Airpods Pro" }
+  ],
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "findProductByName",
+        "description": "Finds a product based on its name or description",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "name or description of the product to find"
+            }
+          },
+          "required": ["name"]
+        }
+      }
+    }
+  ],
+  "tool_choice": "auto"
+}
+
+
+
+
+### Gemini API - Tool function response
+### Gemini API – Continue after function call
+
+POST https://aiplatform.googleapis.com/v1beta1/projects/myspringai-test/locations/global/endpoints/openapi/chat/completions
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "model": "google/gemini-2.0-flash",
+  "messages": [
+    { "role": "user", "content": "Do you have Airpods Pro" },
+    {
+      "role": "assistant",
+      "tool_calls": [
+        {
+          "id": "findProductByName",
+          "function": {
+            "name": "findProductByName",
+            "arguments": "{\"name\":\"Airpods Pro\"}"
+          },
+          "type": "function"
+        }
+      ]
+
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "findProductByName",
+      "content": "{\"name\":\"Airpods Pro\",\"price\":\"$249\",\"quantity\":5}"
+    }
+  ],
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "findProductByName",
+        "description": "Finds a product based on its name or description",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "name or description of the product to find"
+            }
+          },
+          "required": ["name"]
+        }
+      }
+    }
+  ],
+  "tool_choice": "auto"
+}
+

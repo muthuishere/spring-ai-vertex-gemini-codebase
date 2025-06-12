@@ -1,0 +1,15 @@
+### Chat with inventory for single product
+POST http://localhost:8080/api/products/chat-with-inventory
+Content-Type: application/json
+
+{
+  "question": "Do you have Airpods Pro?"
+}
+
+### Chat with inventory for multiple products
+POST http://localhost:8080/api/products/chat-with-inventory
+Content-Type: application/json
+
+{
+  "question": "Do you have AirPods Pro or Samsung Galaxy?"
+}

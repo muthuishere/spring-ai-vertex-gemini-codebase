@@ -1,0 +1,387 @@
+### Gemini API – Smart SQL Query: Do you have Airpods Pro?
+
+POST https://aiplatform.googleapis.com/v1beta1/projects/myspringai-test/locations/global/endpoints/openapi/chat/completions
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "model": "google/gemini-2.0-flash",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a SQL expert assistant. Get all the tables and fields and then execute the SQL query based on the user's question."
+    },
+    {
+      "role": "user",
+      "content": "Do you have Airpods Pro?"
+    }
+  ],
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "getAllTableNames",
+        "description": "Returns a list of all table names in the current database usually all the products and inventory tables are available here.",
+        "parameters": {
+          "type": "object",
+          "properties": {}
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "getTableSchema",
+        "description": "Returns the SQL schema definition (columns and types) of the specified table.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "tableName": {
+              "type": "string",
+              "description": "Name of the table to get the schema for"
+            }
+          },
+          "required": ["tableName"]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "executeSqlQuery",
+        "description": "Executes a raw SQL SELECT query and returns the result as a JSON string.\n\nThis tool is intended for read-only, case-insensitive queries. For partial string matches, always use ILIKE or LOWER(column) LIKE LOWER('%keyword%') patterns instead of '='.\n\nIf you're unsure about table or column names, consider calling `getAllTableNames` or `getTableSchema` first.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "A valid SQL SELECT query to be executed on the database."
+            }
+          },
+          "required": ["query"]
+        }
+      }
+    }
+  ],
+  "tool_choice": "auto"
+}
+
+
+### Gemini API – Respond to getAllTableNames tool call
+
+### Gemini API – Ask about AirPods, respond with getAllTableNames result
+
+POST https://aiplatform.googleapis.com/v1beta1/projects/myspringai-test/locations/global/endpoints/openapi/chat/completions
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "model": "google/gemini-2.0-flash",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a SQL expert assistant. Get all the tables and fields and then execute the SQL query based on the user's question."
+    },
+    {
+      "role": "user",
+      "content": "Do you have Airpods Pro?"
+    },
+    {
+      "role": "assistant",
+      "tool_calls": [
+        {
+          "id": "call-1",
+          "function": {
+            "name": "getAllTableNames",
+            "arguments": "{}"
+          },
+          "type": "function"
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "name": "getAllTableNames",
+      "tool_call_id": "call-1",
+      "content": "[{\"table_name\":\"shipping_details\"}, {\"table_name\":\"user_profile\"}, {\"table_name\":\"order_detail\"}, {\"table_name\":\"inventory\"}, {\"table_name\":\"payment_details\"}, {\"table_name\":\"jetquery_migrations\"}]"
+    }
+  ],
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "getAllTableNames",
+        "description": "Returns a list of all table names in the current database usually all the products and inventory tables are available here.",
+        "parameters": {
+          "type": "object",
+          "properties": {}
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "getTableSchema",
+        "description": "Returns the SQL schema definition (columns and types) of the specified table.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "tableName": {
+              "type": "string",
+              "description": "Name of the table to get the schema for"
+            }
+          },
+          "required": ["tableName"]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "executeSqlQuery",
+        "description": "Executes a raw SQL SELECT query and returns the result as a JSON string.\n\nThis tool is intended for read-only, case-insensitive queries. For partial string matches, always use ILIKE or LOWER(column) LIKE LOWER('%keyword%') patterns instead of '='.\n\nIf you're unsure about table or column names, consider calling `getAllTableNames` or `getTableSchema` first.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "A valid SQL SELECT query to be executed on the database."
+            }
+          },
+          "required": ["query"]
+        }
+      }
+    }
+  ]
+}
+
+### Gemini API – Respond to getTableSchema(inventory)
+
+POST https://aiplatform.googleapis.com/v1beta1/projects/myspringai-test/locations/global/endpoints/openapi/chat/completions
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "model": "google/gemini-2.0-flash",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a SQL expert assistant. Get all the tables and fields and then execute the SQL query based on the user's question."
+    },
+    {
+      "role": "user",
+      "content": "Do you have Airpods Pro?"
+    },
+    {
+      "role": "assistant",
+      "tool_calls": [
+        {
+          "id": "call-1",
+          "function": {
+            "name": "getAllTableNames",
+            "arguments": "{}"
+          },
+          "type": "function"
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "name": "getAllTableNames",
+      "tool_call_id": "call-1",
+      "content": "[{\"table_name\":\"shipping_details\"}, {\"table_name\":\"user_profile\"}, {\"table_name\":\"order_detail\"}, {\"table_name\":\"inventory\"}, {\"table_name\":\"payment_details\"}, {\"table_name\":\"jetquery_migrations\"}]"
+    },
+    {
+      "role": "assistant",
+      "tool_calls": [
+        {
+          "function": {
+            "arguments": "{\"tableName\":\"inventory\"}",
+            "name": "getTableSchema"
+          },
+          "id": "call-2",
+          "type": "function"
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "name": "getTableSchema",
+      "tool_call_id": "call-2",
+      "content": "[{\"column_name\":\"quantity\",\"data_type\":\"integer\"}, {\"column_name\":\"rating\",\"data_type\":\"numeric\"}, {\"column_name\":\"supplier_price\",\"data_type\":\"numeric\"}, {\"column_name\":\"price\",\"data_type\":\"numeric\"}, {\"column_name\":\"brand\",\"data_type\":\"character varying\"}, {\"column_name\":\"product_id\",\"data_type\":\"character varying\"}, {\"column_name\":\"category\",\"data_type\":\"character varying\"}, {\"column_name\":\"name\",\"data_type\":\"character varying\"}, {\"column_name\":\"description\",\"data_type\":\"text\"}, {\"column_name\":\"supplier\",\"data_type\":\"character varying\"}]"
+    }
+  ],
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "getAllTableNames",
+        "description": "Returns a list of all table names in the current database usually all the products and inventory tables are available here.",
+        "parameters": {
+          "type": "object",
+          "properties": {}
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "getTableSchema",
+        "description": "Returns the SQL schema definition (columns and types) of the specified table.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "tableName": {
+              "type": "string",
+              "description": "Name of the table to get the schema for"
+            }
+          },
+          "required": ["tableName"]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "executeSqlQuery",
+        "description": "Executes a raw SQL SELECT query and returns the result as a JSON string.\n\nThis tool is intended for read-only, case-insensitive queries. For partial string matches, always use ILIKE or LOWER(column) LIKE LOWER('%keyword%') patterns instead of '='.\n\nIf you're unsure about table or column names, consider calling `getAllTableNames` or `getTableSchema` first.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "A valid SQL SELECT query to be executed on the database."
+            }
+          },
+          "required": ["query"]
+        }
+      }
+    }
+  ]
+}
+
+
+
+### Gemini API – Fulfill executeSqlQuery tool call with product result
+
+POST https://aiplatform.googleapis.com/v1beta1/projects/myspringai-test/locations/global/endpoints/openapi/chat/completions
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "model": "google/gemini-2.0-flash",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a SQL expert assistant. Get all the tables and fields and then execute the SQL query based on the user's question."
+    },
+    {
+      "role": "user",
+      "content": "Do you have Airpods Pro?"
+    },
+    {
+      "role": "assistant",
+      "tool_calls": [
+        {
+          "id": "call-1",
+          "function": {
+            "name": "getAllTableNames",
+            "arguments": "{}"
+          },
+          "type": "function"
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "name": "getAllTableNames",
+      "tool_call_id": "call-1",
+      "content": "[{\"table_name\":\"shipping_details\"}, {\"table_name\":\"user_profile\"}, {\"table_name\":\"order_detail\"}, {\"table_name\":\"inventory\"}, {\"table_name\":\"payment_details\"}, {\"table_name\":\"jetquery_migrations\"}]"
+    },
+    {
+      "role": "assistant",
+      "tool_calls": [
+        {
+          "function": {
+            "arguments": "{\"tableName\":\"inventory\"}",
+            "name": "getTableSchema"
+          },
+          "id": "call-2",
+          "type": "function"
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "name": "getTableSchema",
+      "tool_call_id": "call-2",
+      "content": "[{\"column_name\":\"quantity\",\"data_type\":\"integer\"}, {\"column_name\":\"rating\",\"data_type\":\"numeric\"}, {\"column_name\":\"supplier_price\",\"data_type\":\"numeric\"}, {\"column_name\":\"price\",\"data_type\":\"numeric\"}, {\"column_name\":\"brand\",\"data_type\":\"character varying\"}, {\"column_name\":\"product_id\",\"data_type\":\"character varying\"}, {\"column_name\":\"category\",\"data_type\":\"character varying\"}, {\"column_name\":\"name\",\"data_type\":\"character varying\"}, {\"column_name\":\"description\",\"data_type\":\"text\"}, {\"column_name\":\"supplier\",\"data_type\":\"character varying\"}]"
+    },
+    {
+      "role": "assistant",
+      "tool_calls": [
+        {
+          "function": {
+            "arguments": "{\"query\":\"SELECT * FROM inventory WHERE LOWER(name) LIKE LOWER('%Airpods Pro%')\"}",
+            "name": "executeSqlQuery"
+          },
+          "id": "call-3",
+          "type": "function"
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "name": "executeSqlQuery",
+      "tool_call_id": "call-3",
+      "content": "[{\"product_id\":\"X000047\",\"name\":\"Apple AirPods Pro\",\"description\":\"Wireless earbuds with active noise cancellation and immersive sound.\",\"price\":279.00,\"supplier_price\":249.00,\"supplier\":\"Apple Inc.\",\"quantity\":200,\"rating\":4.8,\"brand\":\"Apple\",\"category\":\"Audio\"}]"
+    }
+  ],
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "getAllTableNames",
+        "description": "Returns a list of all table names in the current database usually all the products and inventory tables are available here.",
+        "parameters": {
+          "type": "object",
+          "properties": {}
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "getTableSchema",
+        "description": "Returns the SQL schema definition (columns and types) of the specified table.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "tableName": {
+              "type": "string",
+              "description": "Name of the table to get the schema for"
+            }
+          },
+          "required": ["tableName"]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "executeSqlQuery",
+        "description": "Executes a raw SQL SELECT query and returns the result as a JSON string.\n\nThis tool is intended for read-only, case-insensitive queries. For partial string matches, always use ILIKE or LOWER(column) LIKE LOWER('%keyword%') patterns instead of '='.\n\nIf you're unsure about table or column names, consider calling `getAllTableNames` or `getTableSchema` first.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "A valid SQL SELECT query to be executed on the database."
+            }
+          },
+          "required": ["query"]
+        }
+      }
+    }
+  ]
+}
